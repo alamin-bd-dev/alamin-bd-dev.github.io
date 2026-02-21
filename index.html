@@ -1,13 +1,17 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Al Amin | Portfolio</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
     * {
       margin: 0;
       padding: 0;
@@ -27,13 +31,23 @@
       color: white;
     }
 
+    /* Profile Image */
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid white;
+      margin-bottom: 20px;
+    }
+
     header h1 {
-      font-size: 3rem;
+      font-size: 2.5rem;
       margin-bottom: 10px;
     }
 
     header p {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       opacity: 0.9;
     }
 
@@ -56,20 +70,26 @@
       font-size: 1.1rem;
     }
 
-    a.btn {
+    /* Social Icons */
+    .social-icons {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .social-icons a {
       display: inline-block;
-      margin-top: 15px;
-      padding: 12px 25px;
-      background: #4facfe;
+      margin: 10px;
+      font-size: 28px;
       color: white;
-      text-decoration: none;
-      border-radius: 30px;
+      background: #4facfe;
+      padding: 15px;
+      border-radius: 50%;
       transition: 0.3s;
     }
 
-    a.btn:hover {
+    .social-icons a:hover {
       background: #00c6ff;
-      transform: scale(1.05);
+      transform: scale(1.1);
     }
 
     footer {
@@ -81,9 +101,15 @@
     }
   </style>
 </head>
+
 <body>
+
   <header>
-    <h1>👋 Hi, I'm <br> Al Amin</h1>
+    <!-- তোমার ছবি এখানে -->
+    <img src="profile.jpg" alt="Al Amin" class="profile-img">
+
+    <!-- ছবির নিচে নাম -->
+    <h1>Al Amin</h1>
     <p>Beginner Developer | Learning Ethical Hacking</p>
   </header>
 
@@ -107,14 +133,19 @@
   <section>
     <h2>Contact</h2>
     <p>Email: <a href="mailto:alamin.bd.dev@gmail.com">alamin.bd.dev@gmail.com</a></p>
-    <a class="btn" href="https://github.com/alamin-bd-dev" target="_blank">Visit My GitHub</a>
-    <a class="btn" href="https://www.linkedin.com/in/al-amin-bd-dev" target="_blank">Visit My LinkedIn</a>
-    <a class="btn" href="https://www.facebook.com/share/1GVb6fX5XN/" target="_blank">Visit My Facebook</a>
-    <a class="btn" href="https://www.instagram.com/alamin_14314/?utm_source=qr&r=nametag" target="_blank">Visit My Instagram</a>
+
+    <!-- শুধু আইকন -->
+    <div class="social-icons">
+      <a href="https://github.com/alamin-bd-dev" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/al-amin-bd-dev" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://www.facebook.com/share/1GVb6fX5XN/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/alamin_14314/?utm_source=qr&r=nametag" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
   </section>
 
   <footer>
     © 2025 Al Amin | Built with ❤️ using HTML & CSS
   </footer>
+
 </body>
 </html>
