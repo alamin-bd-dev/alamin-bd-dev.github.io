@@ -24,9 +24,11 @@ html{
 body{
   background: 
     linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
-    url('backgroundimage.png') no-repeat center center/cover;
+    url('backgroundimages.png') no-repeat center center/cover;
   color:white;
+  position:relative;
 }
+
 
 /* ===== NAVBAR ===== */
 
@@ -90,13 +92,11 @@ nav{
     display:block;
   }
 }
-
 /* ===== HEADER ===== */
-
 header{
-  margin-top:90px;
   text-align:center;
   padding:70px 20px;
+  color:white;
 }
 
 .profile-img{
@@ -104,24 +104,27 @@ header{
   height:160px;
   border-radius:50%;
   object-fit:cover;
-  border:5px solid white;
+  border:6px solid white;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  margin-bottom:20px;
   transition:0.4s;
 }
 
 .profile-img:hover{
-  transform:scale(1.1);
+  transform:scale(2.0);
 }
 
 header h1{
-  font-size:2.5rem;
+  font-size:2.7rem;
+  font-weight:700;
 }
 
 header p{
-  font-size:1.1rem;
+  font-size:1.2rem;
   opacity:0.9;
 }
 
-/* ===== SECTION ===== */
+/* ===== SECTIONS ===== */
 
 section{
   max-width:950px;
@@ -131,6 +134,7 @@ section{
   backdrop-filter:blur(15px);
   background:rgba(255,255,255,0.05);
   transition:0.3s;
+  scroll-margin-top:120px;
 }
 
 section:hover{
@@ -219,7 +223,6 @@ footer{
 <body>
 
 <nav>
-  <div class="logo">Al Amin</div>
 
   <div class="menu-toggle" id="menu-toggle">
     <i class="fas fa-bars"></i>
@@ -235,6 +238,11 @@ footer{
   </ul>
 </nav>
 
+<!-- 🔥 HACK TEXT -->
+<div class="hack-text">
+  SYSTEM ACCESS GRANTED
+</div>
+
 <header id="home">
   <img src="profile.jpg" class="profile-img">
   <h1>Al Amin</h1>
@@ -242,12 +250,12 @@ footer{
 </header>
 
 <section id="about">
-  <h2>About Me</h2>
+  <h2><i class="fas fa-user"></i> About Me</h2>
   <p>I am an aspiring Ethical Hacker and Cybersecurity enthusiast dedicated to learning system security, vulnerability assessment, and penetration testing.</p>
 </section>
 
 <section id="projects">
-  <h2>Projects</h2>
+  <h2><i class="fas fa-code"></i> Projects</h2>
   <ul>
     <li>Python Mini Programs</li>
     <li>Portfolio Website</li>
@@ -256,7 +264,7 @@ footer{
 </section>
 
 <section id="skills">
-  <h2>Skills</h2>
+  <h2><i class="fas fa-bolt"></i> Skills</h2>
   <div class="skills">
     <div class="skill">Python Basics</div>
     <div class="skill">Linux Basics</div>
@@ -265,23 +273,50 @@ footer{
 </section>
 
 <section id="certificates">
-  <h2>Certificates</h2>
+  <h2><i class="fas fa-certificate"></i> Certificates</h2>
   <div class="certificate">Ethical Hacking Learning</div>
   <div class="certificate">Linux Fundamentals</div>
   <div class="certificate">Python Beginner</div>
 </section>
 
 <section id="contact">
-  <h2>Contact</h2>
-  <p>Phone: <a href="tel:+9660508204963">+9660508204963</a></p>
-  <p>Email: <a href="mailto:alamin.bd.dev@gmail.com">alamin.bd.dev@gmail.com</a></p>
+  <h2><i class="fas fa-address-book"></i> Contact</h2>
+
+  <p><i class="fas fa-phone"></i>
+    <a href="tel:+9660508204963" style="color:white;text-decoration:none;">
+      +9660508204963
+    </a>
+  </p>
+
+  <p><i class="fas fa-envelope"></i>
+    <a href="mailto:alamin.bd.dev@gmail.com" style="color:white;text-decoration:none;">
+      alamin.bd.dev@gmail.com
+    </a>
+  </p>
+
+  <p>
+  <i class="fas fa-location-dot"></i>
+  Tangail,Shakhipur,Dhakha-Bangladesh
+</p>
 
   <div class="social-icons">
-    <a href="https://github.com/alamin-bd-dev" target="_blank"><i class="fab fa-github"></i></a>
-    <a href="https://www.linkedin.com/in/al-amin-bd-dev" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-    <a href="https://www.facebook.com/share/1GVb6fX5XN/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-    <a href="https://www.instagram.com/alamin_14314/" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://github.com/alamin-bd-dev" target="_blank">
+      <i class="fab fa-github"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/al-amin-bd-dev" target="_blank">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+
+    <a href="https://www.facebook.com/share/1GVb6fX5XN/" target="_blank">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+
+    <a href="https://www.instagram.com/alamin_14314/" target="_blank">
+      <i class="fab fa-instagram"></i>
+    </a>
   </div>
+
 </section>
 
 <footer>
@@ -289,14 +324,15 @@ footer{
 </footer>
 
 <script>
-  const toggle = document.getElementById("menu-toggle");
-  const navLinks = document.getElementById("nav-links");
 
-  toggle.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-  });
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+
+toggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
 </script>
 
 </body>
 </html>
-
