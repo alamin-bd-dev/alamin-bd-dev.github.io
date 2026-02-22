@@ -49,46 +49,46 @@ nav, header, section, footer{
 
 /* ===== NAVBAR ===== */
 
-nav{
-  position:fixed;
-  top:0;
-  width:100%;
-  background:rgba(0,0,0,0.9);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 40px;
-  z-index:1000;
-}
+@media (max-width:768px){
 
-.logo{
-  color:white;
-  font-weight:600;
-}
+  .nav-links{
+    position:absolute;
+    top:60px;
+    left:0;
+    width:100%;
+    flex-direction:column;
+    display:none;
+    padding:15px 0;
+    text-align:center;
+  }
 
-.nav-links{
-  list-style:none;
-  display:flex;
-  gap:25px;
-}
+  .nav-links li{
+    margin:10px 20px;
+  }
 
-.nav-links li a{
-  text-decoration:none;
-  color:white;
-  transition:0.3s;
-}
+  .nav-links li a{
+    display:block;
+    padding:12px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(8px);
+    box-shadow:0 4px 10px rgba(0,0,0,0.3);
+    transition:0.3s;
+  }
 
-.nav-links li a:hover{
-  color:#00f2fe;
-}
+  .nav-links li a:hover{
+    background:#00f2fe;
+    color:black;
+  }
 
-.menu-toggle{
-  display:none;
-  color:white;
-  font-size:24px;
-  cursor:pointer;
-}
+  .nav-links.active{
+    display:flex;
+  }
 
+  .menu-toggle{
+    display:block;
+  }
+}
 @media (max-width:768px){
   .nav-links{
     position:absolute;
@@ -324,6 +324,13 @@ toggle.addEventListener("click", () => {
   navLinks.classList.toggle("active");
 });
 
+  // Auto close menu when click link
+document.querySelectorAll(".nav-links a").forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("active");
+  });
+});
+
 // MATRIX EFFECT
 const canvas = document.getElementById("matrix-canvas");
 const ctx = canvas.getContext("2d");
@@ -370,6 +377,7 @@ window.addEventListener("resize",()=>{
 
 </body>
 </html>
+
 
 
 
