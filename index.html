@@ -9,6 +9,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+
+html{
+  scroll-behavior:smooth;
+}
+
 *{
   margin:0;
   padding:0;
@@ -17,21 +22,81 @@
 }
 
 body{
-  margin:0;
-  padding:0;
-  font-family:'Poppins',sans-serif;
   background: 
     linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
     url('backgroundimage.png') no-repeat center center/cover;
   color:white;
 }
 
+/* ===== NAVBAR ===== */
+
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  background:rgba(0,0,0,0.9);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 40px;
+  z-index:1000;
+}
+
+.logo{
+  color:white;
+  font-weight:600;
+}
+
+.nav-links{
+  list-style:none;
+  display:flex;
+  gap:25px;
+}
+
+.nav-links li a{
+  text-decoration:none;
+  color:white;
+  transition:0.3s;
+}
+
+.nav-links li a:hover{
+  color:#00f2fe;
+}
+
+.menu-toggle{
+  display:none;
+  color:white;
+  font-size:24px;
+  cursor:pointer;
+}
+
+@media (max-width:768px){
+  .nav-links{
+    position:absolute;
+    top:60px;
+    right:0;
+    background:black;
+    flex-direction:column;
+    width:200px;
+    display:none;
+    padding:20px;
+  }
+
+  .nav-links.active{
+    display:flex;
+  }
+
+  .menu-toggle{
+    display:block;
+  }
+}
 
 /* ===== HEADER ===== */
+
 header{
+  margin-top:90px;
   text-align:center;
   padding:70px 20px;
-  color:white;
 }
 
 .profile-img{
@@ -39,34 +104,32 @@ header{
   height:160px;
   border-radius:50%;
   object-fit:cover;
-  border:6px solid white;
-  box-shadow:0 10px 30px rgba(0,0,0,0.3);
-  margin-bottom:20px;
+  border:5px solid white;
   transition:0.4s;
 }
 
 .profile-img:hover{
-  transform:scale(2.1);
+  transform:scale(1.1);
 }
 
 header h1{
-  font-size:2.7rem;
-  font-weight:700;
+  font-size:2.5rem;
 }
 
 header p{
-  font-size:1.2rem;
+  font-size:1.1rem;
   opacity:0.9;
 }
 
-/* ===== SECTION DESIGN (GLASS EFFECT) ===== */
+/* ===== SECTION ===== */
+
 section{
   max-width:950px;
   margin:40px auto;
   padding:35px;
   border-radius:20px;
   backdrop-filter:blur(15px);
-  box-shadow:0 15px 35px rgba(0,0,0,0.15);
+  background:rgba(255,255,255,0.05);
   transition:0.3s;
 }
 
@@ -75,18 +138,15 @@ section:hover{
 }
 
 h2{
-  color:#edf0f2;
   margin-bottom:20px;
-  font-size:1.8rem;
 }
 
-/* ===== PROJECT LIST ===== */
 ul li{
-  margin:12px 0;
-  font-size:1.1rem;
+  margin:10px 0;
 }
 
 /* ===== SKILLS ===== */
+
 .skills{
   display:flex;
   flex-wrap:wrap;
@@ -94,8 +154,7 @@ ul li{
 }
 
 .skill{
-  background:#1f2021;
-  color:rgb(247, 242, 242);
+  background:#111;
   padding:10px 18px;
   border-radius:30px;
   font-size:0.9rem;
@@ -103,29 +162,27 @@ ul li{
 }
 
 .skill:hover{
-  background:#00060d;
-  transform:scale(1.1);
+  background:#00f2fe;
+  color:black;
 }
 
 /* ===== CERTIFICATES ===== */
+
 .certificate{
   margin:10px 0;
   padding:12px 18px;
-  background:#000c16;
-  border-left:5px solid #1e0202;
+  background:#111;
+  border-left:4px solid #00f2fe;
   border-radius:8px;
-  font-size:0.95rem;
 }
 
-/* ===== SOCIAL ICONS RESPONSIVE ===== */
+/* ===== SOCIAL ICONS ===== */
 
 .social-icons{
   margin-top:30px;
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  width:100%;
-  max-width:1000px;
+  max-width:600px;
   margin-left:auto;
   margin-right:auto;
 }
@@ -133,88 +190,90 @@ ul li{
 .social-icons a{
   flex:1;
   text-align:center;
-  font:size 80px;
+  font-size:24px;
   color:white;
   padding:18px 0;
-  margin:15px;
-  border-radius:19px;
+  margin:8px;
+  border-radius:12px;
+  background:#111;
   transition:0.3s;
-  box-shadow:0 5px 15px rgba(119, 118, 118, 0.2);
 }
 
 .social-icons a:hover{
-  background:#49053b;
+  background:#00f2fe;
+  color:black;
   transform:translateY(-5px);
 }
 
-/* ===== Mobile Fix ===== */
-@media (max-width:600px){
-  .social-icons{
-    max-width:100%;
-    gap:8px;
-  }
-
-  .social-icons a{
-    margin:0;
-    border-radius:10px;
-  }
-}
 /* ===== FOOTER ===== */
+
 footer{
   text-align:center;
   padding:25px;
-  color:white;
   font-size:0.9rem;
 }
+
 </style>
 </head>
 
 <body>
 
-<header>
+<nav>
+  <div class="logo">Al Amin</div>
+
+  <div class="menu-toggle" id="menu-toggle">
+    <i class="fas fa-bars"></i>
+  </div>
+
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certificates">Certificates</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header id="home">
   <img src="profile.jpg" class="profile-img">
-
-  <h1> </h1>
-
   <h1>Al Amin</h1>
   <p>Beginner Developer | Learning Ethical Hacking</p>
 </header>
 
-<section>
+<section id="about">
   <h2>About Me</h2>
-  <p>I am an aspiring Ethical Hacker and Cybersecurity enthusiast dedicated to learning system security, vulnerability assessment, and penetration testing.
-I continuously practice Linux, Python, and security fundamentals to strengthen my technical skills.
-I believe cybersecurity is not just about hacking — it's about protecting systems, data, and people.</p>
+  <p>I am an aspiring Ethical Hacker and Cybersecurity enthusiast dedicated to learning system security, vulnerability assessment, and penetration testing.</p>
 </section>
 
-<section>
+<section id="projects">
   <h2>Projects</h2>
   <ul>
-    <li>💻 Python Mini Programs</li>
-    <li>🌐 Portfolio Website (GitHub Pages)</li>
-    <li>🔐 Cybersecurity Learning Tools</li>
+    <li>Python Mini Programs</li>
+    <li>Portfolio Website</li>
+    <li>Cybersecurity Learning Tools</li>
   </ul>
 </section>
 
-<section>
+<section id="skills">
   <h2>Skills</h2>
   <div class="skills">
-    <div class="skill">Python basics</div>
-    <div class="skill">Linux Basics learning</div>
-    <div class="skill">Cybersecurity learning</div>
+    <div class="skill">Python Basics</div>
+    <div class="skill">Linux Basics</div>
+    <div class="skill">Cybersecurity Learning</div>
   </div>
 </section>
 
-<section>
+<section id="certificates">
   <h2>Certificates</h2>
-  <div class="certificate">✔ Ethical Hacking and Cybersecurity learning</div>
-  <div class="certificate">✔ Linux Fundamentals learning</div>
-  <div class="certificate">✔ Python Programming Beginner</div>
+  <div class="certificate">Ethical Hacking Learning</div>
+  <div class="certificate">Linux Fundamentals</div>
+  <div class="certificate">Python Beginner</div>
 </section>
 
-<section>
+<section id="contact">
   <h2>Contact</h2>
-  <p>phone: <a href="phoneto:9660508204963">9660508204963</a></p>
+  <p>Phone: <a href="tel:+9660508204963">+9660508204963</a></p>
   <p>Email: <a href="mailto:alamin.bd.dev@gmail.com">alamin.bd.dev@gmail.com</a></p>
 
   <div class="social-icons">
@@ -226,8 +285,17 @@ I believe cybersecurity is not just about hacking — it's about protecting syst
 </section>
 
 <footer>
-  © 2025 Al Amin | Cybersecurity and ethical hacking 
+  © 2025 Al Amin | Cybersecurity & Ethical Hacking
 </footer>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const navLinks = document.getElementById("nav-links");
+
+  toggle.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
+</script>
 
 </body>
 </html>
