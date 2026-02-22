@@ -29,6 +29,23 @@ body{
   position:relative;
 }
 
+/* ===== MATRIX CANVAS ===== */
+
+#matrix-canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  pointer-events:none;
+}
+
+/* Content always above matrix */
+nav, header, section, footer{
+  position:relative;
+  z-index:2;
+}
 
 /* ===== NAVBAR ===== */
 
@@ -92,11 +109,12 @@ nav{
     display:block;
   }
 }
+
 /* ===== HEADER ===== */
+
 header{
   text-align:center;
   padding:70px 20px;
-  color:white;
 }
 
 .profile-img{
@@ -209,8 +227,6 @@ ul li{
   transform:translateY(-5px);
 }
 
-/* ===== FOOTER ===== */
-
 footer{
   text-align:center;
   padding:25px;
@@ -222,8 +238,10 @@ footer{
 
 <body>
 
-<nav>
+<!-- MATRIX BACKGROUND -->
+<canvas id="matrix-canvas"></canvas>
 
+<nav>
   <div class="menu-toggle" id="menu-toggle">
     <i class="fas fa-bars"></i>
   </div>
@@ -237,11 +255,6 @@ footer{
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
-
-<!-- 🔥 HACK TEXT -->
-<div class="hack-text">
-  SYSTEM ACCESS GRANTED
-</div>
 
 <header id="home">
   <img src="profile.jpg" class="profile-img">
@@ -281,42 +294,9 @@ footer{
 
 <section id="contact">
   <h2><i class="fas fa-address-book"></i> Contact</h2>
-
-  <p><i class="fas fa-phone"></i>
-    <a href="tel:+9660508204963" style="color:white;text-decoration:none;">
-      +9660508204963
-    </a>
-  </p>
-
-  <p><i class="fas fa-envelope"></i>
-    <a href="mailto:alamin.bd.dev@gmail.com" style="color:white;text-decoration:none;">
-      alamin.bd.dev@gmail.com
-    </a>
-  </p>
-
-  <p>
-  <i class="fas fa-location-dot"></i>
-  Tangail,Shakhipur,Dhakha-Bangladesh
-</p>
-
-  <div class="social-icons">
-    <a href="https://github.com/alamin-bd-dev" target="_blank">
-      <i class="fab fa-github"></i>
-    </a>
-
-    <a href="https://www.linkedin.com/in/al-amin-bd-dev" target="_blank">
-      <i class="fab fa-linkedin-in"></i>
-    </a>
-
-    <a href="https://www.facebook.com/share/1GVb6fX5XN/" target="_blank">
-      <i class="fab fa-facebook-f"></i>
-    </a>
-
-    <a href="https://www.instagram.com/alamin_14314/" target="_blank">
-      <i class="fab fa-instagram"></i>
-    </a>
-  </div>
-
+  <p><i class="fas fa-phone"></i> +9660508204963</p>
+  <p><i class="fas fa-envelope"></i> alamin.bd.dev@gmail.com</p>
+  <p><i class="fas fa-location-dot"></i> Tangail, Shakhipur, Dhaka - Bangladesh</p>
 </section>
 
 <footer>
@@ -325,11 +305,54 @@ footer{
 
 <script>
 
+// MENU
 const toggle = document.getElementById("menu-toggle");
 const navLinks = document.getElementById("nav-links");
 
 toggle.addEventListener("click", () => {
   navLinks.classList.toggle("active");
+});
+
+// MATRIX EFFECT
+const canvas = document.getElementById("matrix-canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+const fontSize = 14;
+const columns = canvas.width / fontSize;
+
+const drops = [];
+for(let x = 0; x < columns; x++){
+  drops[x] = 1;
+}
+
+function draw(){
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle = "#00ff00";
+  ctx.font = fontSize + "px monospace";
+
+  for(let i = 0; i < drops.length; i++){
+    const text = letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+    if(drops[i]*fontSize > canvas.height && Math.random() > 0.975){
+      drops[i] = 0;
+    }
+
+    drops[i]++;
+  }
+}
+
+setInterval(draw,33);
+
+window.addEventListener("resize",()=>{
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
 });
 
 </script>
