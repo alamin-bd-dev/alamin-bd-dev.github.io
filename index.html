@@ -49,30 +49,73 @@ nav, header, section, footer{
 
 /* ===== NAVBAR ===== */
 
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  background:rgba(0,0,0,0.9);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 40px;
+  z-index:1000;
+}
+
+.logo{
+  color:white;
+  font-weight:600;
+}
+
+.nav-links{
+  list-style:none;
+  display:flex;
+  gap:25px;
+}
+
+.nav-links li a{
+  text-decoration:none;
+  color:white;
+  transition:0.3s;
+}
+
+.nav-links li a:hover{
+  color:#00f2fe;
+}
+
+.menu-toggle{
+  display:none;
+  color:white;
+  font-size:24px;
+  cursor:pointer;
+}
+
 @media (max-width:768px){
 
   .nav-links{
     position:absolute;
     top:60px;
     left:0;
-    width:100%;
     flex-direction:column;
+    width:100px;
     display:none;
-    padding:15px 0;
-    text-align:center;
+    padding:2px;
+    gap:0;
+    background:transparent; /* একসাথে background থাকবে না */
   }
 
   .nav-links li{
-    margin:10px 20px;
+     margin:0;             /* li gap remove */
+    padding:0;
   }
 
   .nav-links li a{
     display:block;
-    padding:12px;
-    border-radius:10px;
-    background:rgba(255,255,255,0.05);
-    backdrop-filter:blur(8px);
-    box-shadow:0 4px 10px rgba(0,0,0,0.3);
+    padding:2px 6px;
+    margin-bottom:10px;  /* এখানে spacing control করো */
+    background:#190c7b;           /* প্রতিটা আলাদা box */
+    border-radius:2px;
+    font-size:14px;       /* একটু ছোট করলে আরো কাছাকাছি হবে */
+   line-height:1;      /* height কমাবে */
     transition:0.3s;
   }
 
@@ -277,12 +320,12 @@ footer{
   <p><i class="fas fa-phone"></i> +9660508204963</p>
   <p><i class="fas fa-envelope"></i> alamin.bd.dev@gmail.com</p>
   <p><i class="fas fa-location-dot"></i> Tangail, Shakhipur, Dhaka - Bangladesh</p>
-  
+
   <div class="social-icons">
-    <a href="https://github.com/alamin-bd-dev" target="_blank"><i class="fab fa-github"></i></a>
-    <a href="https://www.linkedin.com/in/al-amin-bd-dev" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-    <a href="https://www.facebook.com/share/1GVb6fX5XN/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-    <a href="https://www.instagram.com/alamin_14314/" target="_blank"><i class="fab fa-instagram"></i></a>
+   <a href="https://github.com/alamin-bd-dev" target="_blank"><i class="fab fa-github"></i></a>
+   <a href="https://www.linkedin.com/in/al-amin-bd-dev" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+   <a href="https://www.facebook.com/share/1GVb6fX5XN/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+   <a href="https://www.instagram.com/alamin_14314/" target="_blank"><i class="fab fa-instagram"></i></a>
   </div>
 </section>
 
@@ -296,16 +339,18 @@ footer{
 const toggle = document.getElementById("menu-toggle");
 const navLinks = document.getElementById("nav-links");
 
+// Toggle menu
 toggle.addEventListener("click", () => {
   navLinks.classList.toggle("active");
 });
 
-  // Auto close menu when click link
+// Mobile এ link এ click করলে menu বন্ধ হবে
 document.querySelectorAll(".nav-links a").forEach(link => {
   link.addEventListener("click", () => {
     navLinks.classList.remove("active");
   });
 });
+
 
 // MATRIX EFFECT
 const canvas = document.getElementById("matrix-canvas");
@@ -353,10 +398,3 @@ window.addEventListener("resize",()=>{
 
 </body>
 </html>
-
-
-
-
-
-
-
