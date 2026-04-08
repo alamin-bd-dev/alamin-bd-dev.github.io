@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login | Portfolio</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .login-box {
+      width: 100%;
+      max-width: 420px;
+      padding: 2.5rem;
+      background: rgba(0,0,0,0.9);
+      border: 1px solid var(--green);
+      border-radius: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    .login-logo {
+      font-family: var(--font-head);
+      color: var(--green);
+      font-size: 1.4rem;
+      text-align: center;
+      margin-bottom: 0.3rem;
+      letter-spacing: 3px;
+    }
+    .login-sub {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      margin-bottom: 2rem;
+      letter-spacing: 2px;
+    }
+    .error-msg {
+      color: var(--red);
+      font-size: 0.82rem;
+      margin-bottom: 1rem;
+      padding: 0.6rem;
+      border: 1px solid rgba(255,51,51,0.3);
+      background: rgba(255,51,51,0.05);
+      border-radius: 2px;
+      display: none;
+    }
+    .login-btn {
+      width: 100%;
+      padding: 0.85rem;
+      background: transparent;
+      border: 1px solid var(--green);
+      color: var(--green);
+      font-family: var(--font-main);
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      border-radius: 2px;
+    }
+    .login-btn:hover {
+      background: var(--green);
+      color: #000;
+      box-shadow: 0 0 20px rgba(0,255,65,0.3);
+    }
+    .login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .corner { position: absolute; width: 10px; height: 10px; border-color: var(--cyan); border-style: solid; }
+    .corner-tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+    .corner-tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+    .corner-bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+    .corner-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+  </style>
+</head>
+<body>
+  <canvas id="matrix-canvas"></canvas>
+  <div class="login-box">
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+    <div class="login-logo">ADMIN ACCESS</div>
+    <div class="login-sub">// AUTHORIZED PERSONNEL ONLY</div>
+    <div class="error-msg" id="error-msg"></div>
+    <div class="input-group">
+      <label>EMAIL</label>
+      <input type="email" id="email" placeholder="admin@email.com" autocomplete="email" />
+    </div>
+    <div class="input-group">
+      <label>PASSWORD</label>
+      <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" />
+    </div>
+    <button class="login-btn" id="login-btn">[ LOGIN ]</button>
+  </div>
+  <div id="toast"></div>
+
+  <script type="module">
+    import { startMatrixRain } from '../assets/js/matrix.js';
+    import { auth } from '../assets/js/firebase-config.js';
+    import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    startMatrixRain();
+
+    onAuthStateChanged(auth, user => {
+      if (user) window.location.href = 'dashboard.html';
+    });
+
+    document.getElementById('login-btn').addEventListener('click', async () => {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('login-btn');
+      const errEl = document.getElementById('error-msg');
+      errEl.style.display = 'none';
+
+      if (!email || !password) {
+        errEl.textContent = '> ERROR: All fields required.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = '[ AUTHENTICATING... ]';
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        window.location.href = 'dashboard.html';
+      } catch(e) {
+        errEl.textContent = '> ACCESS DENIED: ' + e.message;
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = '[ LOGIN ]';
+      }
+    });
+
+    document.getElementById('password').addEventListener('keydown', e => {
+      if (e.key === 'Enter') document.getElementById('login-btn').click();
+    });
+  </script>
+</body>
+</html>
