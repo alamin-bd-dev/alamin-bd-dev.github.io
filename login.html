@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Login | Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
   <style>
     body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
     .login-box {
@@ -91,14 +91,14 @@
   <div id="toast"></div>
 
   <script type="module">
-    import { startMatrixRain } from 'matrix.js';
-    import { auth } from 'firebase-config.js';
+    import { startMatrixRain } from '../assets/js/matrix.js';
+    import { auth } from '../assets/js/firebase-config.js';
     import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     startMatrixRain();
 
     onAuthStateChanged(auth, user => {
-      if (user) window.location.href = 'dashboard.html';
+      if (user) window.location.replace('dashboard.html');
     });
 
     document.getElementById('login-btn').addEventListener('click', async () => {
