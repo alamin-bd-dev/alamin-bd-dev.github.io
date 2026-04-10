@@ -99,7 +99,7 @@ nav {
 .mobile-menu {
   display: none;
   position: fixed;
-  top: 60px; left: 0; right: 0;
+  top: 60px; right: 0;
   background: rgba(0,0,0,0.97);
   border-bottom: 1px solid var(--card-border);
   z-index: 99;
