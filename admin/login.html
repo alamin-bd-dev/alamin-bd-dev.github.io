@@ -113,19 +113,19 @@
     function getFriendlyError(code) {
       switch (code) {
         case 'auth/invalid-email':
-          return '> ভুল Email format। সঠিক email দিন।';
+          return '> Rong email format! Type your email';
         case 'auth/user-not-found':
         case 'auth/invalid-credential':
         case 'auth/wrong-password':
-          return '> Email বা Password ভুল। আবার চেষ্টা করুন।';
+          return '> Email or Password rong!';
         case 'auth/too-many-requests':
-          return '> অনেকবার ভুল হয়েছে। কিছুক্ষণ পর চেষ্টা করুন।';
+          return '>Please wait some and try again!';
         case 'auth/user-disabled':
-          return '> এই account টি disabled করা হয়েছে।';
+          return '> This account has been disabled!';
         case 'auth/network-request-failed':
-          return '> Internet connection সমস্যা। আবার চেষ্টা করুন।';
+          return '> Internet connection eror!';
         default:
-          return '> Login ব্যর্থ হয়েছে। আবার চেষ্টা করুন।';
+          return '> Login failed!Try again ';
       }
     }
 
@@ -152,19 +152,19 @@
 
       // client-side validation
       if (!email && !password) {
-        showError('> Email এবং Password দিন।');
+        showError('> Type your Email and Password!');
         return;
       }
       if (!email) {
-        showError('> Email দিন।');
+        showError('> Type your Email!');
         return;
       }
       if (!password) {
-        showError('> Password দিন।');
+        showError('> Type your Password!');
         return;
       }
       if (password.length < 6) {
-        showError('> Password কমপক্ষে ৬ অক্ষরের হতে হবে।');
+        showError('> Password must be at least 6 characters long.');
         return;
       }
 
