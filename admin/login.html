@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Login </title>
+  <title>Admin Login | Portfolio</title>
   <link rel="stylesheet" href="../assets/css/style.css" />
   <style>
     body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
@@ -113,19 +113,19 @@
     function getFriendlyError(code) {
       switch (code) {
         case 'auth/invalid-email':
-          return '> Invalid Email format। Enter valid email !';
+          return '> ভুল Email format। সঠিক email দিন।';
         case 'auth/user-not-found':
         case 'auth/invalid-credential':
         case 'auth/wrong-password':
-          return '> Email or Password rong, please try again !';
+          return '> Email বা Password ভুল। আবার চেষ্টা করুন।';
         case 'auth/too-many-requests':
-          return '> More time rong please wait few second ! ';
+          return '> অনেকবার ভুল হয়েছে। কিছুক্ষণ পর চেষ্টা করুন।';
         case 'auth/user-disabled':
-          return '> This account has been disabled !';
+          return '> এই account টি disabled করা হয়েছে।';
         case 'auth/network-request-failed':
-          return '> Internet connection eror!';
+          return '> Internet connection সমস্যা। আবার চেষ্টা করুন।';
         default:
-          return '> Login failed !';
+          return '> Login ব্যর্থ হয়েছে। আবার চেষ্টা করুন।';
       }
     }
 
@@ -152,19 +152,19 @@
 
       // client-side validation
       if (!email && !password) {
-        showError('>Type your Email and Password !');
+        showError('> Email এবং Password দিন।');
         return;
       }
       if (!email) {
-        showError('> Type your Email ');
+        showError('> Email দিন।');
         return;
       }
       if (!password) {
-        showError('>Type your Password !');
+        showError('> Password দিন।');
         return;
       }
       if (password.length < 6) {
-        showError('>Type Password minimum 6 word ');
+        showError('> Password কমপক্ষে ৬ অক্ষরের হতে হবে।');
         return;
       }
 
