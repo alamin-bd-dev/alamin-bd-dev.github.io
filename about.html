@@ -12,12 +12,16 @@
       gap: 3rem;
       align-items: start;
     }
-    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 768px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
 
     .profile-card {
       text-align: center;
-      position: sticky;
-      top: 80px;
+      
     }
     .profile-img-wrap {
       position: relative;
@@ -117,7 +121,7 @@
       <li><a href="projects.html">Tools</a></li>
       <li><a href="certificates.html">Certificates</a></li>
       <li><a href="blog.html">Blog</a></li>
-      <li><a href="about.html" class="active">About</a></li>
+            <li><a href="about.html" class="active">About</a></li>
     </ul>
     <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
   </nav>
@@ -142,22 +146,23 @@
             <div class="profile-ring"></div>
           </div>
           <div class="profile-name">Al Amin </div>
-          <div class="profile-title"> BD Ethical Hacker </div>
+          <div class="profile-title">// ETHICAL HACKER </div>
           <ul class="contact-list">
             <li><span class="label">Email:</span> alamin.bd.dev@gmail.com</li>
-            <li><span class="label">Phone:</span> +966 0508 204 963</li>
-            <li><span class="label">City:</span> Shakhipur,Tangail,Dhaka Bangladesh</li>
+            <li><span class="label">Phone:</span> +966 050 820 4963</li>
+            <li><span class="label">City:</span> DHAKA BANGLADESH </li>
             <li><span class="label">Status:</span> <span style="color:var(--green)">Available</span></li>
           </ul>
           <div style="margin-top:1.2rem; display:flex; gap:0.6rem; justify-content:center; flex-wrap:wrap;">
-            <a href="#" class="btn btn-sm">GitHub</a>
-            <a href="#" class="btn btn-sm" style="border-color:var(--cyan);color:var(--cyan)">LinkedIn</a>
+            <a href="https://github.com/alamin-bd-dev" class="btn btn-sm">GitHub</a>
+            <a href="https://www.linkedin.com/in/al-amin-bd-dev" class="btn btn-sm" style="border-color:var(--cyan);color:var(--cyan)">LinkedIn</a>
+            <a href="https://www.facebook.com/alamin.bd.dev1" class="btn btn-sm" style="border-color:var(--amber);color:var(--amber)">Facebook</a>
           </div>
         </div>
 
         <div class="about-content">
-          <h2>//Who Am I ?</h2>
-          <p>
+          <h2>// WHO AM I?</h2>
+         <p>
             Hello! I'm <strong style="color:var(--green)">Al Amin</strong>, I am a passionate Cyber Security learner with a strong interest in Web Security, Bug Hunting, and Red Teaming.
            I enjoy exploring how web applications work, identifying vulnerabilities, 
            and understanding how attackers think so systems can be better protected.
@@ -199,14 +204,15 @@
 
           <h2 style="margin-top:2rem">// QUICK FACTS</h2>
           <div class="info-grid">
+            <div class="info-item"><div class="key">BIRTHDAY</div><div class="val">21 FEB 1996</div></div>
             <div class="info-item"><div class="key">TERGET</div><div class="val">Red Timing</div></div>
             <div class="info-item"><div class="key">FREELANCE</div><div class="val" style="color:var(--green)">Available</div></div>
-            <div class="info-item"><div class="key">EXPERIENCE</div><div class="val">learning</div></div>
-            <div class="info-item"><div class="key">LOCATION</div><div class="val">Tangail, Bangladesh</div></div>
+            <div class="info-item"><div class="key">EXPERIENCE</div><div class="val">Learning</div></div>
+            <div class="info-item"><div class="key">LOCATION</div><div class="val">Tangail, Dhaka, Bangladesh</div></div>
             <div class="info-item"><div class="key">LANGUAGES</div><div class="val">Bangla, English</div></div>
           </div>
 
-          <a href="projects.html" class="btn">View My Tools </a>
+          <a href="projects.html" class="btn">View My Tools</a>
         </div>
       </div>
     </section>
@@ -219,5 +225,11 @@
       document.getElementById('mobile-menu').classList.toggle('open');
     });
   </script>
+
+  <footer class="site-footer">
+    &lt;<span>&copy; 2025-2026 Al Amin. All Rights Reserved</span>&gt;
+    <div class="footer-copy">Cybersecurity Enthusiast | Bug Hunter | Future Red Teamer</div>
+  </footer>
+
 </body>
 </html>
