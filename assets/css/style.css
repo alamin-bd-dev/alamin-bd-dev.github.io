@@ -11,8 +11,8 @@
   --bg3: #0a1a0a;
   --card-bg: rgba(0, 255, 65, 0.04);
   --card-border: rgba(0, 255, 65, 0.2);
-  --text: #eff2ef;
-  --text-muted: #eff2ef;
+  --text: #ffffff;
+  --text-muted: #b8d4b8;
   --red: #ff3333;
   --amber: #ffaa00;
   --font-main: 'Share Tech Mono', monospace;
@@ -71,7 +71,7 @@ nav {
   list-style: none;
 }
 .nav-links a {
-  color: var(--text-muted);
+  color: #d0e8d0;
   text-decoration: none;
   font-size: 0.85rem;
   letter-spacing: 1px;
@@ -117,7 +117,7 @@ nav {
   pointer-events: all;
 }
 .mobile-menu a {
-  color: var(--text-muted);
+  color: #d0e8d0;
   text-decoration: none;
   padding: 0.85rem 2rem;
   font-size: 0.9rem;
@@ -149,6 +149,7 @@ section, .page-section {
   color: var(--green);
   margin-bottom: 0.5rem;
   letter-spacing: 3px;
+  text-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
 }
 .section-title::before { content: '> '; color: var(--cyan); }
 
@@ -188,7 +189,7 @@ section, .page-section {
   margin-bottom: 0.75rem;
   letter-spacing: 1px;
 }
-.card p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.7; }
+.card p { color: #d0e8d0; font-size: 0.85rem; line-height: 1.7; }
 
 /* ── BUTTONS ── */
 .btn {
@@ -221,7 +222,7 @@ section, .page-section {
 .input-group { margin-bottom: 1.2rem; }
 .input-group label {
   display: block;
-  color: var(--text-muted);
+  color: #d0e8d0;
   font-size: 0.8rem;
   margin-bottom: 0.4rem;
   letter-spacing: 1px;
@@ -285,7 +286,7 @@ body::after {
   border-top: 1px solid var(--card-border);
   padding: 1.5rem 2rem;
   text-align: center;
-  color: var(--text-muted);
+  color: #d0e8d0;
   font-size: 0.78rem;
   letter-spacing: 1px;
 }
@@ -298,12 +299,12 @@ body::after {
 ::-webkit-scrollbar-thumb { background: var(--dark-green); border-radius: 3px; }
 
 /* ── LOADING ── */
-.loading { color: var(--text-muted); font-size: 0.85rem; animation: pulse 1.5s ease-in-out infinite; }
+.loading { color: #d0e8d0; font-size: 0.85rem; animation: pulse 1.5s ease-in-out infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
 .empty-state {
   text-align: center;
-  color: var(--text-muted);
+  color: #d0e8d0;
   padding: 3rem;
   border: 1px dashed var(--card-border);
   border-radius: 4px;
@@ -326,3 +327,34 @@ body::after {
 #toast.show { transform: translateY(0); opacity: 1; }
 #toast.success { background: rgba(0,255,65,0.12); border: 1px solid var(--green); color: var(--green); }
 #toast.error { background: rgba(255,51,51,0.12); border: 1px solid var(--red); color: var(--red); }
+
+/* ── STAT ITEMS CLICKABLE ── */
+.hero-stats a.stat-item {
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  display: block;
+  text-align: center;
+}
+
+.hero-stats a.stat-item:hover {
+  transform: translateY(-5px);
+}
+
+.hero-stats a.stat-item:hover .stat-num {
+  text-shadow: 0 0 25px rgba(0, 255, 65, 0.9);
+}
+
+.hero-stats a.stat-item:hover .stat-label {
+  color: var(--green);
+}
+
+/* ── HERO DESC TEXT ── */
+.hero-desc {
+  color: #d0e8d0 !important;
+}
+
+/* ── TERMINAL LINES ── */
+.terminal-line {
+  color: #b8d4b8;
+}
