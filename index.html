@@ -81,11 +81,23 @@
         <a href="about.html" class="btn" style="border-color:var(--cyan);color:var(--cyan)">About Me</a>
       </div>
       <div class="hero-stats">
-        <div class="stat-item"><div class="stat-num" id="stat-projects">0</div><div class="stat-label">PROJECTS</div></div>
-        <div class="stat-item"><div class="stat-num" id="stat-skills">0</div><div class="stat-label">SKILLS</div></div>
-        <div class="stat-item"><div class="stat-num" id="stat-certs">0</div><div class="stat-label">CERTIFICATES</div></div>
-        <div class="stat-item"><div class="stat-num" id="stat-blogs">0</div><div class="stat-label">BLOGS</div></div>
-      </div>
+  <a href="projects.html" class="stat-item">
+    <div class="stat-num" id="stat-projects">0</div>
+    <div class="stat-label">PROJECTS</div>
+  </a>
+  <a href="skills.html" class="stat-item">
+    <div class="stat-num" id="stat-skills">0</div>
+    <div class="stat-label">SKILLS</div>
+  </a>
+  <a href="certificates.html" class="stat-item">
+    <div class="stat-num" id="stat-certs">0</div>
+    <div class="stat-label">CERTIFICATES</div>
+  </a>
+  <a href="blog.html" class="stat-item">
+    <div class="stat-num" id="stat-blogs">0</div>
+    <div class="stat-label">BLOGS</div>
+  </a>
+</div>
     </section>
   </div>
   <div class="scroll-hint">▼ SCROLL</div>
@@ -119,6 +131,7 @@
         animateCount('stat-projects', p.exists() ? Object.keys(p.val()).length : 0);
         animateCount('stat-skills',   s.exists() ? Object.keys(s.val()).length : 0);
         animateCount('stat-certs',    c.exists() ? Object.keys(c.val()).length : 0);
+        animateCount('stat-blogs',    b.exists() ? Object.keys(b.val()).length : 0);
       } catch(e) { console.warn('Stats:', e.message); }
     }
     loadStats();
