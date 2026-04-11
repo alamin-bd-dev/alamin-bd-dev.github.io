@@ -225,10 +225,13 @@
 
   <script type="module">
     import { startMatrixRain } from '../assets/js/matrix.js';
-    import { auth, db, storage } from '../assets/js/firebase-config.js';
+    import { auth, db } from '../assets/js/firebase-config.js';
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { ref as dbRef, get, set, push, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-    import { ref as stRef, uploadBytesResumable, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
+    // ── CLOUDINARY CONFIG ──
+    const CLOUDINARY_CLOUD = 'dchwxrivr';
+    const CLOUDINARY_PRESET = 'portfolio_upload';
 
     startMatrixRain();
 
@@ -288,24 +291,39 @@
       }
     });
 
-    // ── FIREBASE STORAGE UPLOAD with progress ──
-    function uploadFile(file, folder, progressBarId, progressWrapId) {
-      return new Promise((resolve, reject) => {
-        const storageRef = stRef(storage, `${folder}/${Date.now()}_${file.name}`);
-        const task = uploadBytesResumable(storageRef, file);
-        const wrap = document.getElementById(progressWrapId);
-        const bar  = document.getElementById(progressBarId);
-        if (wrap) wrap.style.display = 'block';
+    // ── CLOUDINARY UPLOAD with progress ──
+    async function uploadFile(file, folder, progressBarId, progressWrapId) {
+      const wrap = document.getElementById(progressWrapId);
+      const bar  = document.getElementById(progressBarId);
+      if (wrap) wrap.style.display = 'block';
 
-        task.on('state_changed',
-          snap => { const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100); if (bar) bar.style.width = pct + '%'; },
-          err => reject(err),
-          async () => {
-            const url = await getDownloadURL(task.snapshot.ref);
-            if (wrap) { setTimeout(() => { wrap.style.display = 'none'; if(bar) bar.style.width = '0%'; }, 800); }
-            resolve(url);
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', CLOUDINARY_PRESET);
+      formData.append('folder', folder);
+
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`);
+
+        xhr.upload.onprogress = e => {
+          if (e.lengthComputable && bar) {
+            bar.style.width = Math.round((e.loaded / e.total) * 100) + '%';
           }
-        );
+        };
+
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            const res = JSON.parse(xhr.responseText);
+            if (wrap) setTimeout(() => { wrap.style.display = 'none'; if(bar) bar.style.width = '0%'; }, 800);
+            resolve(res.secure_url);
+          } else {
+            reject(new Error('Upload failed: ' + xhr.statusText));
+          }
+        };
+
+        xhr.onerror = () => reject(new Error('Network error during upload'));
+        xhr.send(formData);
       });
     }
 
@@ -541,12 +559,11 @@
       container.querySelectorAll('[data-col]').forEach(btn => {
         btn.addEventListener('click', async () => {
           if (!confirm('Delete this item? This cannot be undone.')) return;
-          const { key, img, col } = btn.dataset;
+          const { key, col } = btn.dataset;
           try {
             await remove(dbRef(db, `${col}/${key}`));
-            if (img) {
-              try { await deleteObject(stRef(storage, img)); } catch(_) {}
-            }
+            // Note: Cloudinary image delete requires server-side API key
+            // Image টা Cloudinary তে থাকবে কিন্তু DB থেকে reference উঠে যাবে
             toast('Deleted successfully.');
             await reloadFn();
             await loadOverview();
