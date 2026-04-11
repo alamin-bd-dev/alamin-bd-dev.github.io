@@ -126,14 +126,19 @@
     }
 
     async function loadStats() {
-      try {
-        const [p, s, c] = await Promise.all([get(ref(db,'projects')), get(ref(db,'skills')), get(ref(db,'certificates')),  get(ref(db,'blogs'))]);
-        animateCount('stat-projects', p.exists() ? Object.keys(p.val()).length : 0);
-        animateCount('stat-skills',   s.exists() ? Object.keys(s.val()).length : 0);
-        animateCount('stat-certs',    c.exists() ? Object.keys(c.val()).length : 0);
-        animateCount('stat-blogs',    b.exists() ? Object.keys(b.val()).length : 0);
-      } catch(e) { console.warn('Stats:', e.message); }
-    }
+  try {
+    const [p, s, c, b] = await Promise.all([
+      get(ref(db,'projects')), 
+      get(ref(db,'skills')), 
+      get(ref(db,'certificates')), 
+      get(ref(db,'blogs'))
+    ]);
+    animateCount('stat-projects', p.exists() ? Object.keys(p.val()).length : 0);
+    animateCount('stat-skills',   s.exists() ? Object.keys(s.val()).length : 0);
+    animateCount('stat-certs',    c.exists() ? Object.keys(c.val()).length : 0);
+    animateCount('stat-blogs',    b.exists() ? Object.keys(b.val()).length : 0); 
+  } catch(e) { console.warn('Stats:', e.message); }
+}
     loadStats();
 
     const hamburger = document.getElementById('hamburger');
