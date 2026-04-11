@@ -21,8 +21,8 @@ export function startMatrixRain(canvasId = 'matrix-canvas') {
 
     for (let i = 0; i < drops.length; i++) {
       const char = chars[Math.floor(Math.random() * chars.length)];
-      const green = Math.random() > 0.05 ? '#00ff41' : '#00ffcc';
-      ctx.fillStyle = green;
+      const red = Math.random() > 0.05 ? '#ff0000' : '#ff3333';
+      ctx.fillStyle = red;
       ctx.fillText(char, i * fontSize, drops[i] * fontSize);
       if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
       drops[i]++;
