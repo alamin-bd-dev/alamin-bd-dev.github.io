@@ -8,33 +8,77 @@
   <style>
     #hero {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0 2rem;
-      max-width: 900px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      padding: 80px 4rem 2rem;
+      max-width: 1200px;
       margin: 0 auto;
     }
+    .hero-left { display: flex; flex-direction: column; justify-content: center; }
     .hero-prefix { color: var(--text-muted); font-size: 0.9rem; letter-spacing: 3px; margin-bottom: 1rem; }
     .hero-name {
       font-family: var(--font-head);
-      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-size: clamp(2rem, 4.5vw, 4rem);
       color: var(--green);
       line-height: 1.1;
       margin-bottom: 1rem;
       text-shadow: 0 0 30px rgba(0,255,65,0.3);
     }
-    .hero-role { font-family: var(--font-head); font-size: clamp(1rem, 2.5vw, 1.5rem); color: var(--cyan); margin-bottom: 1.5rem; min-height: 2rem; }
-    .hero-desc { color: var(--text-muted); max-width: 550px; line-height: 1.8; font-size: 0.95rem; margin-bottom: 2.5rem; }
+    .hero-role { font-family: var(--font-head); font-size: clamp(0.9rem, 2vw, 1.3rem); color: var(--cyan); margin-bottom: 1.5rem; min-height: 2rem; }
+    .hero-desc { color: var(--text-muted); line-height: 1.8; font-size: 0.88rem; margin-bottom: 2.5rem; }
     .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .hero-stats { display: flex; gap: 3rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--card-border); flex-wrap: wrap; }
+    .hero-stats { display: flex; gap: 2rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--card-border); flex-wrap: wrap; }
     .stat-item { text-align: center; }
-    .stat-num { font-family: var(--font-head); font-size: 1.8rem; color: var(--green); }
-    .stat-label { color: var(--text-muted); font-size: 0.75rem; letter-spacing: 1px; }
+    .stat-num { font-family: var(--font-head); font-size: 1.6rem; color: var(--green); }
+    .stat-label { color: var(--text-muted); font-size: 0.72rem; letter-spacing: 1px; }
     .scroll-hint { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); color: var(--text-muted); font-size: 0.7rem; letter-spacing: 2px; animation: bounce 2s ease-in-out infinite; z-index: 10; }
     @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-8px)} }
     .terminal-line { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.4rem; }
     .terminal-line span { color: var(--green); }
+
+    /* ── HERO RIGHT — CYBER TERMINAL ── */
+    .hero-right { display: flex; align-items: center; justify-content: center; }
+    .cyber-terminal {
+      width: 100%;
+      max-width: 500px;
+      background: rgba(0,8,0,0.9);
+      border: 1px solid rgba(0,255,65,0.5);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 0 40px rgba(0,255,65,0.08), 0 0 80px rgba(0,255,65,0.04);
+    }
+    .terminal-titlebar {
+      background: rgba(0,255,65,0.07);
+      border-bottom: 1px solid rgba(0,255,65,0.15);
+      padding: 0.55rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .t-dot.red { background: #ff5f57; }
+    .t-dot.amber { background: #febc2e; }
+    .t-dot.green { background: #28c840; }
+    .terminal-title { margin: 0 auto; color: rgba(0,255,65,0.5); font-size: 0.68rem; letter-spacing: 2px; font-family: var(--font-main); }
+    .terminal-body { padding: 1.2rem 1.4rem; font-size: 0.76rem; line-height: 2; min-height: 300px; font-family: var(--font-main); }
+    .t-line { margin-bottom: 0; }
+    .t-prompt { color: var(--green); }
+    .t-cmd { color: var(--cyan); }
+    .t-out { color: rgba(0,255,65,0.6); padding-left: 1rem; display: block; }
+    .t-ok  { color: var(--green); padding-left: 1rem; display: block; }
+    .t-warn { color: var(--amber); padding-left: 1rem; display: block; }
+    .t-err { color: #ff6b6b; padding-left: 1rem; display: block; }
+    .t-gap { display: block; height: 0.4rem; }
+    .t-blink { display: inline-block; width: 7px; height: 13px; background: var(--green); animation: tblink 1s step-end infinite; vertical-align: middle; margin-left: 2px; }
+    @keyframes tblink { 50% { opacity: 0; } }
+    .typed-text { display: inline; }
+
+    @media (max-width: 960px) {
+      #hero { grid-template-columns: 1fr; padding: 80px 2rem 2rem; gap: 0; }
+      .hero-right { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -64,40 +108,57 @@
 
   <div class="site-wrapper">
     <section id="hero">
-      <div class="terminal-line">&gt; <span>system.initialize()</span> ... OK</div>
-      <div class="terminal-line">&gt; <span>loading.portfolio()</span> ... DONE</div>
-      <p class="hero-prefix">// HELLO WORLD — I AM</p>
-      <h1 class="hero-name">Al Amin</h1>
-      <h2 class="hero-role"><span id="typewriter"></span></h2>
-      <p class="hero-desc">
-        I am a passionate Cyber Security learner with a strong interest in Web Security, Bug Hunting, and Red Teaming.
-         I enjoy exploring how web applications work, identifying vulnerabilities, 
-         and understanding how attackers think so systems can be better protected.
-         I spend my time learning security concepts, practicing ethical hacking techniques,
-         and researching different types of vulnerabilities found in modern web applications.
-      </p>
-      <div class="hero-btns">
-        <a href="projects.html" class="btn">View Tools</a>
-        <a href="about.html" class="btn" style="border-color:var(--cyan);color:var(--cyan)">About Me</a>
+      <!-- LEFT SIDE -->
+      <div class="hero-left">
+        <div class="terminal-line">&gt; <span>system.initialize()</span> ... OK</div>
+        <div class="terminal-line">&gt; <span>loading.portfolio()</span> ... DONE</div>
+        <p class="hero-prefix">// HELLO WORLD — I AM</p>
+        <h1 class="hero-name">Al Amin</h1>
+        <h2 class="hero-role"><span id="typewriter"></span></h2>
+        <p class="hero-desc">
+          I am a passionate Cyber Security learner with a strong interest in Web Security, Bug Hunting, and Red Teaming.
+          I enjoy exploring how web applications work, identifying vulnerabilities,
+          and understanding how attackers think so systems can be better protected.
+          I spend my time learning security concepts, practicing ethical hacking techniques,
+          and researching different types of vulnerabilities found in modern web applications.
+        </p>
+        <div class="hero-btns">
+          <a href="projects.html" class="btn">View Tools</a>
+          <a href="about.html" class="btn" style="border-color:var(--cyan);color:var(--cyan)">About Me</a>
+        </div>
+        <div class="hero-stats">
+          <a href="projects.html" class="stat-item">
+            <div class="stat-num" id="stat-projects">0</div>
+            <div class="stat-label">TOOLS</div>
+          </a>
+          <a href="skills.html" class="stat-item">
+            <div class="stat-num" id="stat-skills">0</div>
+            <div class="stat-label">SKILLS</div>
+          </a>
+          <a href="certificates.html" class="stat-item">
+            <div class="stat-num" id="stat-certs">0</div>
+            <div class="stat-label">CERTIFICATES</div>
+          </a>
+          <a href="blog.html" class="stat-item">
+            <div class="stat-num" id="stat-blogs">0</div>
+            <div class="stat-label">BLOGS</div>
+          </a>
+        </div>
       </div>
-      <div class="hero-stats">
-  <a href="projects.html" class="stat-item">
-    <div class="stat-num" id="stat-projects">0</div>
-    <div class="stat-label">TOOLS</div>
-  </a>
-  <a href="skills.html" class="stat-item">
-    <div class="stat-num" id="stat-skills">0</div>
-    <div class="stat-label">SKILLS</div>
-  </a>
-  <a href="certificates.html" class="stat-item">
-    <div class="stat-num" id="stat-certs">0</div>
-    <div class="stat-label">CERTIFICATES</div>
-  </a>
-  <a href="blog.html" class="stat-item">
-    <div class="stat-num" id="stat-blogs">0</div>
-    <div class="stat-label">BLOGS</div>
-  </a>
-</div>
+
+      <!-- RIGHT SIDE — ANIMATED CYBER TERMINAL -->
+      <div class="hero-right">
+        <div class="cyber-terminal">
+          <div class="terminal-titlebar">
+            <div class="t-dot red"></div>
+            <div class="t-dot amber"></div>
+            <div class="t-dot green"></div>
+            <span class="terminal-title">al-amin@kali:~$</span>
+          </div>
+          <div class="terminal-body" id="cyber-terminal-body">
+          </div>
+        </div>
+      </div>
     </section>
   </div>
   <div class="scroll-hint">▼ SCROLL</div>
@@ -145,10 +206,105 @@
     const mobileMenu = document.getElementById('mobile-menu');
     hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
     mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+
   </script>
   <footer class="site-footer">
     &lt;<span>&copy; 2025-2026 Al Amin. All Rights Reserved</span>&gt;
     <div class="footer-copy">Cybersecurity Enthusiast | Bug Hunter | Future Red Teamer</div>
   </footer>
+
+  <script>
+    // ── CYBER TERMINAL ANIMATION (standalone, no Firebase dependency) ──
+    const terminalLines = [
+      { type: 'cmd',  text: 'nmap -sV -p 80,443 target.com' },
+      { type: 'out',  text: 'Starting Nmap 7.94 scan...' },
+      { type: 'out',  text: 'PORT    STATE  SERVICE  VERSION' },
+      { type: 'out',  text: '80/tcp  open   http     Apache 2.4.41' },
+      { type: 'out',  text: '443/tcp open   ssl/http  nginx 1.18' },
+      { type: 'ok',   text: '[+] Open ports found: 2' },
+      { type: 'gap'  },
+      { type: 'cmd',  text: 'sqlmap -u "site.com/login" --dbs' },
+      { type: 'out',  text: 'Testing connection to target...' },
+      { type: 'warn', text: '[!] Parameter "id" is vulnerable!' },
+      { type: 'ok',   text: '[+] Databases: users, admin, logs' },
+      { type: 'gap'  },
+      { type: 'cmd',  text: 'nikto -h target.com' },
+      { type: 'out',  text: 'Scanning for vulnerabilities...' },
+      { type: 'ok',   text: '[+] XSS vector found in /search' },
+      { type: 'err',  text: '[!] Outdated SSL/TLS detected' },
+      { type: 'ok',   text: '[+] Scan complete. Report saved.' },
+      { type: 'gap'  },
+      { type: 'cmd',  text: 'whoami' },
+      { type: 'ok',   text: 'al-amin // ethical-hacker' },
+    ];
+
+    function tDelay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    function tTypeText(el, text, speed) {
+      return new Promise(resolve => {
+        let i = 0;
+        const iv = setInterval(() => {
+          el.textContent += text[i++];
+          if (i >= text.length) { clearInterval(iv); resolve(); }
+        }, speed);
+      });
+    }
+
+    async function typeInTerminal() {
+      const body = document.getElementById('cyber-terminal-body');
+      if (!body) return;
+      body.innerHTML = '';
+
+      for (const line of terminalLines) {
+        if (line.type === 'gap') {
+          const gap = document.createElement('span');
+          gap.className = 't-gap';
+          body.appendChild(gap);
+          await tDelay(100);
+          continue;
+        }
+
+        const div = document.createElement('div');
+        div.className = 't-line';
+
+        if (line.type === 'cmd') {
+          div.innerHTML = '<span class="t-prompt">al-amin@kali:~$ </span><span class="t-cmd t-typed"></span>';
+          body.appendChild(div);
+          const typed = div.querySelector('.t-typed');
+          const cur = document.createElement('span');
+          cur.className = 't-blink';
+          typed.after(cur);
+          await tTypeText(typed, line.text, 40);
+          cur.remove();
+          await tDelay(300);
+        } else {
+          const clsMap = { out: 't-out', ok: 't-ok', warn: 't-warn', err: 't-err' };
+          const cls = clsMap[line.type] || 't-out';
+          div.innerHTML = `<span class="${cls}"></span>`;
+          body.appendChild(div);
+          const span = div.querySelector('.' + cls);
+          await tTypeText(span, line.text, 20);
+          await tDelay(80);
+        }
+
+        body.scrollTop = body.scrollHeight;
+      }
+
+      // blinking cursor at end
+      const endCur = document.createElement('div');
+      endCur.className = 't-line';
+      endCur.innerHTML = '<span class="t-prompt">al-amin@kali:~$ </span><span class="t-blink"></span>';
+      body.appendChild(endCur);
+
+      // restart after 5s
+      setTimeout(typeInTerminal, 5000);
+    }
+
+    // Start when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(typeInTerminal, 800);
+    });
+  </script>
 </body>
 </html>
