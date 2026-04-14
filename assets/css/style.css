@@ -143,6 +143,23 @@ section, .page-section {
   margin: 0 auto;
 }
 
+/* ── MOBILE SECTION FIX ── */
+@media (max-width: 768px) {
+  section, .page-section {
+    padding: 5rem 1.2rem 2.5rem;
+  }
+
+  /* Hero section specific — blank space fix */
+  section:first-of-type,
+  .hero-section,
+  .hero,
+  #hero {
+    padding-top: 4.5rem;
+    min-height: unset !important;
+    height: auto !important;
+  }
+}
+
 .section-title {
   font-family: var(--font-head);
   font-size: clamp(1.4rem, 3vw, 2rem);
@@ -249,6 +266,13 @@ section, .page-section {
 .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
 .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
 
+@media (max-width: 768px) {
+  .grid-3, .grid-2 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
 /* ── TAGS ── */
 .tag {
   display: inline-block;
@@ -336,25 +360,12 @@ body::after {
   display: block;
   text-align: center;
 }
-
-.hero-stats a.stat-item:hover {
-  transform: translateY(-5px);
-}
-
-.hero-stats a.stat-item:hover .stat-num {
-  text-shadow: 0 0 25px rgba(0, 255, 65, 0.9);
-}
-
-.hero-stats a.stat-item:hover .stat-label {
-  color: var(--green);
-}
+.hero-stats a.stat-item:hover { transform: translateY(-5px); }
+.hero-stats a.stat-item:hover .stat-num { text-shadow: 0 0 25px rgba(0, 255, 65, 0.9); }
+.hero-stats a.stat-item:hover .stat-label { color: var(--green); }
 
 /* ── HERO DESC TEXT ── */
-.hero-desc {
-  color: #d0e8d0 !important;
-}
+.hero-desc { color: #d0e8d0 !important; }
 
 /* ── TERMINAL LINES ── */
-.terminal-line {
-  color: #b8d4b8;
-}
+.terminal-line { color: #b8d4b8; }
