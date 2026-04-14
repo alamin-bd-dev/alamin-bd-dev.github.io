@@ -1,87 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard | Portfolio</title>
   <link rel="stylesheet" href="../assets/css/style.css" />
   <style>
-    body { background: var(--bg); visibility: hidden; }
-    body.auth-ready { visibility: visible; }
+    body {
+      background: var(--bg);
+      visibility: hidden;
+    }
+
+    body.auth-ready {
+      visibility: visible;
+    }
 
     #auth-gate {
-      position: fixed; inset: 0; background: #000; z-index: 9999;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.2rem;
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
     }
-    #auth-gate.hidden { display: none; }
-    .gate-logo { font-family: 'Orbitron', monospace; color: #00ff41; font-size: 1.3rem; letter-spacing: 4px; }
-    .gate-msg { color: #5a9a5a; font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; letter-spacing: 2px; animation: pulse 1.2s ease-in-out infinite; }
-    .gate-bar { width: 200px; height: 2px; background: rgba(0,255,65,0.15); border-radius: 2px; overflow: hidden; }
-    .gate-bar-fill { height: 100%; width: 0%; background: #00ff41; border-radius: 2px; animation: barLoad 1.5s ease forwards; }
-    @keyframes barLoad { to { width: 100%; } }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-    .dash-layout { display: flex; min-height: 100vh; }
+    #auth-gate.hidden {
+      display: none;
+    }
+
+    .gate-logo {
+      font-family: 'Orbitron', monospace;
+      color: #00ff41;
+      font-size: 1.3rem;
+      letter-spacing: 4px;
+    }
+
+    .gate-msg {
+      color: #5a9a5a;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    .gate-bar {
+      width: 200px;
+      height: 2px;
+      background: rgba(0, 255, 65, 0.15);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .gate-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: #00ff41;
+      border-radius: 2px;
+      animation: barLoad 1.5s ease forwards;
+    }
+
+    @keyframes barLoad {
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.4
+      }
+    }
+
+    .dash-layout {
+      display: flex;
+      min-height: 100vh;
+    }
 
     .sidebar {
-      width: 230px; min-height: 100vh;
-      background: rgba(0,15,0,0.95); border-right: 1px solid var(--card-border);
-      padding: 1.5rem 0; position: fixed; top: 0; left: 0; z-index: 50;
-      display: flex; flex-direction: column;
+      width: 230px;
+      min-height: 100vh;
+      background: rgba(0, 15, 0, 0.95);
+      border-right: 1px solid var(--card-border);
+      padding: 1.5rem 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
     }
-    .sidebar-logo { font-family: var(--font-head); color: var(--green); font-size: 1rem; padding: 0 1.5rem 1.5rem; border-bottom: 1px solid var(--card-border); margin-bottom: 1rem; letter-spacing: 2px; }
-    .sidebar-logo span { color: var(--cyan); }
-    .sidebar-nav { list-style: none; flex: 1; }
-    .sidebar-nav li a { display: flex; align-items: center; gap: 0.7rem; padding: 0.75rem 1.5rem; color: var(--text-muted); text-decoration: none; font-size: 0.82rem; letter-spacing: 1px; transition: all 0.2s; border-left: 2px solid transparent; }
-    .sidebar-nav li a:hover, .sidebar-nav li a.active { color: var(--green); background: var(--card-bg); border-left-color: var(--green); }
-    .sidebar-bottom { padding: 1rem 1.5rem; border-top: 1px solid var(--card-border); }
-    .user-info { color: var(--text-muted); font-size: 0.75rem; margin-bottom: 0.7rem; word-break: break-all; }
 
-    .dash-main { margin-left: 230px; flex: 1; padding: 2rem; position: relative; z-index: 1; }
-    .dash-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--card-border); }
-    .dash-header h1 { font-family: var(--font-head); color: var(--green); font-size: 1.2rem; letter-spacing: 2px; }
+    .sidebar-logo {
+      font-family: var(--font-head);
+      color: var(--green);
+      font-size: 1rem;
+      padding: 0 1.5rem 1.5rem;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+    }
 
-    .panel { display: none; }
-    .panel.active { display: block; }
+    .sidebar-logo span {
+      color: var(--cyan);
+    }
 
-    .form-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 4px; padding: 1.5rem; margin-bottom: 2rem; }
-    .form-card h3 { font-family: var(--font-head); color: var(--cyan); font-size: 0.9rem; margin-bottom: 1.2rem; letter-spacing: 1px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+    .sidebar-nav {
+      list-style: none;
+      flex: 1;
+    }
 
-    .list-item { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 4px; padding: 1rem 1.2rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; gap: 1rem; flex-wrap: wrap; }
-    .list-item-info h4 { color: var(--green); font-size: 0.9rem; margin-bottom: 0.2rem; }
-    .list-item-info p { color: var(--text-muted); font-size: 0.78rem; }
-    .list-item-img { width: 60px; height: 45px; object-fit: cover; border: 1px solid var(--card-border); border-radius: 2px; }
+    .sidebar-nav li a {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.75rem 1.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+      border-left: 2px solid transparent;
+    }
 
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-    .stat-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 4px; padding: 1.2rem; text-align: center; }
-    .stat-card .num { font-family: var(--font-head); font-size: 2rem; color: var(--green); }
-    .stat-card .lbl { color: var(--text-muted); font-size: 0.75rem; letter-spacing: 1px; margin-top: 0.3rem; }
+    .sidebar-nav li a:hover,
+    .sidebar-nav li a.active {
+      color: var(--green);
+      background: var(--card-bg);
+      border-left-color: var(--green);
+    }
 
-    .upload-area { border: 1px dashed var(--card-border); padding: 1.2rem; text-align: center; color: var(--text-muted); font-size: 0.82rem; cursor: pointer; border-radius: 2px; transition: border-color 0.2s; }
-    .upload-area:hover { border-color: var(--green); }
-    .upload-preview { max-width: 180px; margin: 0.8rem auto 0; border: 1px solid var(--card-border); border-radius: 2px; display: none; }
+    .sidebar-bottom {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--card-border);
+    }
 
-    .progress-wrap { height: 3px; background: rgba(0,255,65,0.1); border-radius: 2px; margin-top: 0.6rem; display: none; overflow: hidden; }
-    .progress-bar { height: 100%; background: var(--green); width: 0%; transition: width 0.3s; }
+    .user-info {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      margin-bottom: 0.7rem;
+      word-break: break-all;
+    }
 
-    .mobile-toggle { display: none; background: none; border: 1px solid var(--card-border); color: var(--green); padding: 0.4rem 0.8rem; cursor: pointer; font-family: var(--font-main); font-size: 0.8rem; }
+    .dash-main {
+      margin-left: 230px;
+      flex: 1;
+      padding: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .dash-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .dash-header h1 {
+      font-family: var(--font-head);
+      color: var(--green);
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .form-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-card h3 {
+      font-family: var(--font-head);
+      color: var(--cyan);
+      font-size: 0.9rem;
+      margin-bottom: 1.2rem;
+      letter-spacing: 1px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .list-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .list-item-info h4 {
+      color: var(--green);
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .list-item-info p {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
+    .list-item-img {
+      width: 60px;
+      height: 45px;
+      object-fit: cover;
+      border: 1px solid var(--card-border);
+      border-radius: 2px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+
+    .stat-card .num {
+      font-family: var(--font-head);
+      font-size: 2rem;
+      color: var(--green);
+    }
+
+    .stat-card .lbl {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      margin-top: 0.3rem;
+    }
+
+    .upload-area {
+      border: 1px dashed var(--card-border);
+      padding: 1.2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .upload-area:hover {
+      border-color: var(--green);
+    }
+
+    .upload-preview {
+      max-width: 180px;
+      margin: 0.8rem auto 0;
+      border: 1px solid var(--card-border);
+      border-radius: 2px;
+      display: none;
+    }
+
+    .progress-wrap {
+      height: 3px;
+      background: rgba(0, 255, 65, 0.1);
+      border-radius: 2px;
+      margin-top: 0.6rem;
+      display: none;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--green);
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--card-border);
+      color: var(--green);
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+      font-family: var(--font-main);
+      font-size: 0.8rem;
+    }
+
     @media (max-width: 768px) {
-      .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
-      .sidebar.open { transform: translateX(0); }
-      .dash-main { margin-left: 0; }
-      .mobile-toggle { display: block; }
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .dash-main {
+        margin-left: 0;
+      }
+
+      .mobile-toggle {
+        display: block;
+      }
     }
   </style>
 </head>
+
 <body>
   <canvas id="matrix-canvas"></canvas>
 
   <div id="auth-gate">
     <div class="gate-logo">ADMIN PANEL</div>
     <div class="gate-msg">&gt; VERIFYING ACCESS...</div>
-    <div class="gate-bar"><div class="gate-bar-fill"></div></div>
+    <div class="gate-bar">
+      <div class="gate-bar-fill"></div>
+    </div>
   </div>
 
   <div class="dash-layout">
@@ -96,7 +365,8 @@
       </ul>
       <div class="sidebar-bottom">
         <div class="user-info" id="user-email">Loading...</div>
-        <a href="../index.html" class="btn btn-sm" style="display:block;text-align:center;margin-bottom:0.5rem">View Site</a>
+        <a href="../index.html" class="btn btn-sm" style="display:block;text-align:center;margin-bottom:0.5rem">View
+          Site</a>
         <button class="btn btn-sm btn-danger" id="logout-btn" style="width:100%">Logout</button>
       </div>
     </aside>
@@ -110,10 +380,22 @@
       <!-- OVERVIEW -->
       <div class="panel active" id="panel-overview">
         <div class="stats-grid">
-          <div class="stat-card"><div class="num" id="ov-projects">-</div><div class="lbl">PROJECTS</div></div>
-          <div class="stat-card"><div class="num" id="ov-skills">-</div><div class="lbl">SKILLS</div></div>
-          <div class="stat-card"><div class="num" id="ov-certs">-</div><div class="lbl">CERTIFICATES</div></div>
-          <div class="stat-card"><div class="num" id="ov-blogs">-</div><div class="lbl">BLOG POSTS</div></div>
+          <div class="stat-card">
+            <div class="num" id="ov-projects">-</div>
+            <div class="lbl">PROJECTS</div>
+          </div>
+          <div class="stat-card">
+            <div class="num" id="ov-skills">-</div>
+            <div class="lbl">SKILLS</div>
+          </div>
+          <div class="stat-card">
+            <div class="num" id="ov-certs">-</div>
+            <div class="lbl">CERTIFICATES</div>
+          </div>
+          <div class="stat-card">
+            <div class="num" id="ov-blogs">-</div>
+            <div class="lbl">BLOG POSTS</div>
+          </div>
         </div>
         <div class="form-card">
           <h3>// SYSTEM STATUS</h3>
@@ -131,14 +413,19 @@
         <div class="form-card">
           <h3>// ADD NEW PROJECT</h3>
           <div class="form-row">
-            <div class="input-group"><label>PROJECT NAME *</label><input type="text" id="proj-name" placeholder="My Awesome Project" /></div>
-            <div class="input-group"><label>LIVE URL</label><input type="url" id="proj-live" placeholder="https://..." /></div>
+            <div class="input-group"><label>PROJECT NAME *</label><input type="text" id="proj-name"
+                placeholder="My Awesome Project" /></div>
+            <div class="input-group"><label>LIVE URL</label><input type="url" id="proj-live"
+                placeholder="https://..." /></div>
           </div>
           <div class="form-row">
-            <div class="input-group"><label>GITHUB URL</label><input type="url" id="proj-github" placeholder="https://github.com/..." /></div>
-            <div class="input-group"><label>TAGS (comma separated)</label><input type="text" id="proj-tags" placeholder="React, Firebase, CSS" /></div>
+            <div class="input-group"><label>GITHUB URL</label><input type="url" id="proj-github"
+                placeholder="https://github.com/..." /></div>
+            <div class="input-group"><label>TAGS (comma separated)</label><input type="text" id="proj-tags"
+                placeholder="React, Firebase, CSS" /></div>
           </div>
-          <div class="input-group"><label>PROJECT ABOUT</label><textarea id="proj-about" placeholder="Describe your project..."></textarea></div>
+          <div class="input-group"><label>PROJECT ABOUT</label><textarea id="proj-about"
+              placeholder="Describe your project..."></textarea></div>
           <div class="input-group">
             <label>PROJECT IMAGE</label>
             <div class="upload-area" id="proj-upload-area">
@@ -146,12 +433,18 @@
               <div id="proj-upload-label">Click to upload image</div>
               <img id="proj-preview" class="upload-preview" src="" alt="" />
             </div>
-            <div class="progress-wrap" id="proj-progress"><div class="progress-bar" id="proj-bar"></div></div>
+            <div class="progress-wrap" id="proj-progress">
+              <div class="progress-bar" id="proj-bar"></div>
+            </div>
           </div>
           <button class="btn" id="add-project-btn">[ ADD PROJECT ]</button>
         </div>
-        <h3 style="font-family:var(--font-head);color:var(--cyan);font-size:0.9rem;margin-bottom:1rem;letter-spacing:1px">// EXISTING PROJECTS</h3>
-        <div id="projects-list"><p class="loading">&gt; Loading...</p></div>
+        <h3
+          style="font-family:var(--font-head);color:var(--cyan);font-size:0.9rem;margin-bottom:1rem;letter-spacing:1px">
+          // EXISTING PROJECTS</h3>
+        <div id="projects-list">
+          <p class="loading">&gt; Loading...</p>
+        </div>
       </div>
 
       <!-- SKILLS -->
@@ -159,15 +452,23 @@
         <div class="form-card">
           <h3>// ADD NEW SKILL</h3>
           <div class="form-row">
-            <div class="input-group"><label>SKILL NAME *</label><input type="text" id="skill-name" placeholder="JavaScript" /></div>
-            <div class="input-group"><label>CATEGORY</label><input type="text" id="skill-cat" placeholder="Frontend, Backend, DevOps..." /></div>
+            <div class="input-group"><label>SKILL NAME *</label><input type="text" id="skill-name"
+                placeholder="JavaScript" /></div>
+            <div class="input-group"><label>CATEGORY</label><input type="text" id="skill-cat"
+                placeholder="Frontend, Backend, DevOps..." /></div>
           </div>
-          <div class="input-group"><label>PROFICIENCY LEVEL (0-100)</label><input type="number" id="skill-level" placeholder="85" min="0" max="100" /></div>
-          <div class="input-group"><label>ABOUT THIS SKILL</label><textarea id="skill-about" placeholder="Brief description..." style="min-height:70px"></textarea></div>
+          <div class="input-group"><label>PROFICIENCY LEVEL (0-100)</label><input type="number" id="skill-level"
+              placeholder="85" min="0" max="100" /></div>
+          <div class="input-group"><label>ABOUT THIS SKILL</label><textarea id="skill-about"
+              placeholder="Brief description..." style="min-height:70px"></textarea></div>
           <button class="btn" id="add-skill-btn">[ ADD SKILL ]</button>
         </div>
-        <h3 style="font-family:var(--font-head);color:var(--cyan);font-size:0.9rem;margin-bottom:1rem;letter-spacing:1px">// EXISTING SKILLS</h3>
-        <div id="skills-list"><p class="loading">&gt; Loading...</p></div>
+        <h3
+          style="font-family:var(--font-head);color:var(--cyan);font-size:0.9rem;margin-bottom:1rem;letter-spacing:1px">
+          // EXISTING SKILLS</h3>
+        <div id="skills-list">
+          <p class="loading">&gt; Loading...</p>
+        </div>
       </div>
 
       <!-- CERTIFICATES -->
@@ -175,14 +476,19 @@
         <div class="form-card">
           <h3>// ADD CERTIFICATE</h3>
           <div class="form-row">
-            <div class="input-group"><label>CERTIFICATE NAME *</label><input type="text" id="cert-name" placeholder="AWS Certified Developer" /></div>
-            <div class="input-group"><label>ISSUER</label><input type="text" id="cert-issuer" placeholder="Amazon Web Services" /></div>
+            <div class="input-group"><label>CERTIFICATE NAME *</label><input type="text" id="cert-name"
+                placeholder="AWS Certified Developer" /></div>
+            <div class="input-group"><label>ISSUER</label><input type="text" id="cert-issuer"
+                placeholder="Amazon Web Services" /></div>
           </div>
           <div class="form-row">
-            <div class="input-group"><label>DATE ISSUED</label><input type="text" id="cert-date" placeholder="Jan 2024" /></div>
-            <div class="input-group"><label>CERTIFICATE LINK</label><input type="url" id="cert-link" placeholder="https://..." /></div>
+            <div class="input-group"><label>DATE ISSUED</label><input type="text" id="cert-date"
+                placeholder="Jan 2024" /></div>
+            <div class="input-group"><label>CERTIFICATE LINK</label><input type="url" id="cert-link"
+                placeholder="https://..." /></div>
           </div>
-          <div class="input-group"><label>ABOUT</label><textarea id="cert-about" placeholder="What this certificate represents..." style="min-height:70px"></textarea></div>
+          <div class="input-group"><label>ABOUT</label><textarea id="cert-about"
+              placeholder="What this certificate represents..." style="min-height:70px"></textarea></div>
           <div class="input-group">
             <label>CERTIFICATE IMAGE</label>
             <div class="upload-area" id="cert-upload-area">
@@ -190,19 +496,26 @@
               <div id="cert-upload-label">Click to upload certificate image</div>
               <img id="cert-preview" class="upload-preview" src="" alt="" />
             </div>
-            <div class="progress-wrap" id="cert-progress"><div class="progress-bar" id="cert-bar"></div></div>
+            <div class="progress-wrap" id="cert-progress">
+              <div class="progress-bar" id="cert-bar"></div>
+            </div>
           </div>
           <button class="btn" id="add-cert-btn">[ ADD CERTIFICATE ]</button>
         </div>
-        <h3 style="font-family:var(--font-head);color:var(--cyan);font-size:0.9rem;margin-bottom:1rem;letter-spacing:1px">// EXISTING CERTIFICATES</h3>
-        <div id="certs-list"><p class="loading">&gt; Loading...</p></div>
+        <h3
+          style="font-family:var(--font-head);color:var(--cyan);font-size:0.9rem;margin-bottom:1rem;letter-spacing:1px">
+          // EXISTING CERTIFICATES</h3>
+        <div id="certs-list">
+          <p class="loading">&gt; Loading...</p>
+        </div>
       </div>
 
       <!-- BLOGS -->
       <div class="panel" id="panel-blogs">
         <div class="form-card">
           <h3>// CREATE BLOG POST</h3>
-          <div class="input-group"><label>TITLE *</label><input type="text" id="blog-title" placeholder="Post title..." /></div>
+          <div class="input-group"><label>TITLE *</label><input type="text" id="blog-title"
+              placeholder="Post title..." /></div>
           <div class="input-group">
             <label>COVER IMAGE</label>
             <div class="upload-area" id="blog-upload-area">
@@ -210,13 +523,20 @@
               <div id="blog-upload-label">Click to upload cover image</div>
               <img id="blog-preview" class="upload-preview" src="" alt="" />
             </div>
-            <div class="progress-wrap" id="blog-progress"><div class="progress-bar" id="blog-bar"></div></div>
+            <div class="progress-wrap" id="blog-progress">
+              <div class="progress-bar" id="blog-bar"></div>
+            </div>
           </div>
-          <div class="input-group"><label>CONTENT *</label><textarea id="blog-content" placeholder="Write your blog post here..." style="min-height:200px"></textarea></div>
+          <div class="input-group"><label>CONTENT *</label><textarea id="blog-content"
+              placeholder="Write your blog post here..." style="min-height:200px"></textarea></div>
           <button class="btn" id="add-blog-btn">[ PUBLISH POST ]</button>
         </div>
-        <h3 style="font-family:var(--font-head);color:var(--cyan);font-size:0.9rem;margin-bottom:1rem;letter-spacing:1px">// PUBLISHED POSTS</h3>
-        <div id="blogs-list"><p class="loading">&gt; Loading...</p></div>
+        <h3
+          style="font-family:var(--font-head);color:var(--cyan);font-size:0.9rem;margin-bottom:1rem;letter-spacing:1px">
+          // PUBLISHED POSTS</h3>
+        <div id="blogs-list">
+          <p class="loading">&gt; Loading...</p>
+        </div>
       </div>
     </main>
   </div>
@@ -274,7 +594,7 @@
     });
 
     // ── UPLOAD AREA CLICKS ──
-    ['proj','cert','blog'].forEach(key => {
+    ['proj', 'cert', 'blog'].forEach(key => {
       const area = document.getElementById(key + '-upload-area');
       const input = document.getElementById(key + '-img');
       if (area && input) {
@@ -294,7 +614,7 @@
     // ── CLOUDINARY UPLOAD with progress ──
     async function uploadFile(file, folder, progressBarId, progressWrapId) {
       const wrap = document.getElementById(progressWrapId);
-      const bar  = document.getElementById(progressBarId);
+      const bar = document.getElementById(progressBarId);
       if (wrap) wrap.style.display = 'block';
 
       const formData = new FormData();
@@ -315,7 +635,7 @@
         xhr.onload = () => {
           if (xhr.status === 200) {
             const res = JSON.parse(xhr.responseText);
-            if (wrap) setTimeout(() => { wrap.style.display = 'none'; if(bar) bar.style.width = '0%'; }, 800);
+            if (wrap) setTimeout(() => { wrap.style.display = 'none'; if (bar) bar.style.width = '0%'; }, 800);
             resolve(res.secure_url);
           } else {
             reject(new Error('Upload failed: ' + xhr.statusText));
@@ -340,219 +660,297 @@
           get(dbRef(db, 'certificates')), get(dbRef(db, 'blogs'))
         ]);
         document.getElementById('ov-projects').textContent = p.exists() ? Object.keys(p.val()).length : 0;
-        document.getElementById('ov-skills').textContent   = s.exists() ? Object.keys(s.val()).length : 0;
-        document.getElementById('ov-certs').textContent    = c.exists() ? Object.keys(c.val()).length : 0;
-        document.getElementById('ov-blogs').textContent    = b.exists() ? Object.keys(b.val()).length : 0;
+        document.getElementById('ov-skills').textContent = s.exists() ? Object.keys(s.val()).length : 0;
+        document.getElementById('ov-certs').textContent = c.exists() ? Object.keys(c.val()).length : 0;
+        document.getElementById('ov-blogs').textContent = b.exists() ? Object.keys(b.val()).length : 0;
         document.getElementById('fb-status').textContent = 'Connected ✓';
-      } catch(e) {
+      } catch (e) {
         document.getElementById('fb-status').textContent = 'Error: ' + e.message;
       }
     }
 
     // ─────────── PROJECTS ───────────
     async function loadProjects() {
-      const list = document.getElementById('projects-list');
-      try {
-        const snap = await get(dbRef(db, 'projects'));
-        if (!snap.exists()) { list.innerHTML = '<div class="empty-state">&gt; No projects yet.</div>'; return; }
-        list.innerHTML = '';
-        const items = [];
-        snap.forEach(child => items.push({ key: child.key, ...child.val() }));
-        items.reverse().forEach(d => {
-          const el = document.createElement('div');
-          el.className = 'list-item';
-          el.innerHTML = `
-            <div style="display:flex;gap:1rem;align-items:center;flex:1">
-              ${d.imageUrl ? `<img src="${d.imageUrl}" class="list-item-img" alt="">` : ''}
-              <div class="list-item-info">
-                <h4>${d.name}</h4>
-                <p>${(d.about||'').substring(0,80)}${d.about&&d.about.length>80?'...':''}</p>
-                <p style="margin-top:0.2rem">${(d.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</p>
-              </div>
-            </div>
-            <button class="btn btn-sm btn-danger" data-key="${d.key}" data-img="${d.imageUrl||''}" data-col="projects">Delete</button>`;
-          list.appendChild(el);
-        });
-        attachDeleteListeners(list, loadProjects);
-      } catch(e) { list.innerHTML = `<div class="empty-state">&gt; Error: ${e.message}</div>`; }
-    }
 
-    document.getElementById('add-project-btn').addEventListener('click', async () => {
-      const name = document.getElementById('proj-name').value.trim();
-      if (!name) { toast('Project name is required', 'error'); return; }
-      const btn = document.getElementById('add-project-btn');
-      btn.disabled = true; btn.textContent = '[ SAVING... ]';
+      const list = document.getElementById("projects-list")
+
       try {
-        let imageUrl = '';
-        const file = document.getElementById('proj-img').files[0];
-        if (file) imageUrl = await uploadFile(file, 'projects', 'proj-bar', 'proj-progress');
-        const newRef = push(dbRef(db, 'projects'));
-        await set(newRef, {
-          name,
-          about: document.getElementById('proj-about').value.trim(),
-          liveUrl: document.getElementById('proj-live').value.trim(),
-          githubUrl: document.getElementById('proj-github').value.trim(),
-          tags: document.getElementById('proj-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
-          imageUrl,
-          createdAt: Date.now()
-        });
-        ['proj-name','proj-about','proj-live','proj-github','proj-tags'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('proj-preview').style.display = 'none';
-        document.getElementById('proj-upload-label').textContent = 'Click to upload image';
-        document.getElementById('proj-img').value = '';
-        toast('Project added!');
-        await loadProjects(); await loadOverview();
-      } catch(e) { toast('Error: ' + e.message, 'error'); }
-      btn.disabled = false; btn.textContent = '[ ADD PROJECT ]';
-    });
+
+        const snap = await get(dbRef(db, "projects"))
+
+        list.innerHTML = ""
+
+        if (!snap.exists()) {
+          list.innerHTML = "> No projects"
+          return
+        }
+
+        const data = snap.val()
+
+        Object.keys(data).reverse().forEach(key => {
+
+          const d = data[key]
+
+          const el = document.createElement("div")
+
+          el.className = "list-item"
+
+          el.innerHTML = `
+
+<div style="display:flex;gap:10px;align-items:center;flex:1">
+
+${d.imageUrl ? `<img src="${d.imageUrl}" class="list-item-img">` : ""}
+
+<div class="list-item-info">
+
+<h4>${d.name}</h4>
+
+<p>${d.about || ""}</p>
+
+</div>
+
+</div>
+
+<button class="btn btn-sm btn-danger delete-project" data-key="${key}">
+Delete
+</button>
+
+`
+
+          list.appendChild(el)
+
+        })
+
+        document.querySelectorAll(".delete-project").forEach(btn => {
+
+          btn.onclick = async function () {
+
+            const key = this.dataset.key
+
+            if (confirm("Delete project?")) {
+
+              await remove(dbRef(db, "projects/" + key))
+
+              toast("Project deleted")
+
+              loadProjects()
+              loadOverview()
+
+            }
+
+          }
+
+        })
+
+      }
+
+      catch (e) {
+
+        list.innerHTML = e.message
+
+      }
+
+    }
 
     // ─────────── SKILLS ───────────
     async function loadSkills() {
-      const list = document.getElementById('skills-list');
-      try {
-        const snap = await get(dbRef(db, 'skills'));
-        if (!snap.exists()) { list.innerHTML = '<div class="empty-state">&gt; No skills yet.</div>'; return; }
-        list.innerHTML = '';
-        const items = [];
-        snap.forEach(child => items.push({ key: child.key, ...child.val() }));
-        items.reverse().forEach(d => {
-          const el = document.createElement('div');
-          el.className = 'list-item';
-          el.innerHTML = `
-            <div class="list-item-info" style="flex:1">
-              <h4>${d.name} <span class="tag">${d.category||'General'}</span></h4>
-              <p>${d.about||''}</p>
-              <p style="color:var(--cyan);font-size:0.75rem;margin-top:0.2rem">Level: ${d.level||75}%</p>
-            </div>
-            <button class="btn btn-sm btn-danger" data-key="${d.key}" data-img="" data-col="skills">Delete</button>`;
-          list.appendChild(el);
-        });
-        attachDeleteListeners(list, loadSkills);
-      } catch(e) { list.innerHTML = `<div class="empty-state">&gt; Error: ${e.message}</div>`; }
-    }
 
-    document.getElementById('add-skill-btn').addEventListener('click', async () => {
-      const name = document.getElementById('skill-name').value.trim();
-      if (!name) { toast('Skill name required', 'error'); return; }
-      try {
-        const newRef = push(dbRef(db, 'skills'));
-        await set(newRef, {
-          name,
-          category: document.getElementById('skill-cat').value.trim() || 'General',
-          level: parseInt(document.getElementById('skill-level').value) || 75,
-          about: document.getElementById('skill-about').value.trim(),
-          createdAt: Date.now()
-        });
-        ['skill-name','skill-cat','skill-level','skill-about'].forEach(id => document.getElementById(id).value = '');
-        toast('Skill added!');
-        await loadSkills(); await loadOverview();
-      } catch(e) { toast('Error: ' + e.message, 'error'); }
-    });
+      const list = document.getElementById("skills-list")
+
+      const snap = await get(dbRef(db, "skills"))
+
+      list.innerHTML = ""
+
+      if (!snap.exists()) {
+        list.innerHTML = "> No skills"
+        return
+      }
+
+      const data = snap.val()
+
+      Object.keys(data).reverse().forEach(key => {
+
+        const s = data[key]
+
+        const el = document.createElement("div")
+
+        el.className = "list-item"
+
+        el.innerHTML = `
+
+<div class="list-item-info">
+
+<h4>${s.name}</h4>
+
+<p>${s.category || ""}</p>
+
+</div>
+
+<button class="btn btn-sm btn-danger delete-skill" data-key="${key}">
+Delete
+</button>
+
+`
+
+        list.appendChild(el)
+
+      })
+
+      document.querySelectorAll(".delete-skill").forEach(btn => {
+
+        btn.onclick = async function () {
+
+          const key = this.dataset.key
+
+          await remove(dbRef(db, "skills/" + key))
+
+          toast("Skill deleted")
+
+          loadSkills()
+          loadOverview()
+
+        }
+
+      })
+
+    }
 
     // ─────────── CERTIFICATES ───────────
     async function loadCerts() {
+
       const list = document.getElementById('certs-list');
+
       try {
-        const snap = await get(dbRef(db, 'certificates'));
-        if (!snap.exists()) { list.innerHTML = '<div class="empty-state">&gt; No certificates yet.</div>'; return; }
-        list.innerHTML = '';
-        const items = [];
-        snap.forEach(child => items.push({ key: child.key, ...child.val() }));
-        items.reverse().forEach(d => {
-          const el = document.createElement('div');
-          el.className = 'list-item';
-          el.innerHTML = `
-            <div style="display:flex;gap:1rem;align-items:center;flex:1">
-              ${d.imageUrl ? `<img src="${d.imageUrl}" class="list-item-img" alt="">` : ''}
-              <div class="list-item-info">
-                <h4>${d.name}</h4>
-                <p>${d.issuer||''} ${d.date ? '· ' + d.date : ''}</p>
-              </div>
-            </div>
-            <button class="btn btn-sm btn-danger" data-key="${d.key}" data-img="${d.imageUrl||''}" data-col="certificates">Delete</button>`;
-          list.appendChild(el);
+
+        const snapshot = await get(dbRef(db, 'certificates'));
+
+        list.innerHTML = "";
+
+        if (!snapshot.exists()) {
+          list.innerHTML = '<div class="empty-state">> No certificates found</div>';
+          return;
+        }
+
+        const data = snapshot.val();
+
+        Object.keys(data).reverse().forEach(key => {
+
+          const cert = data[key];
+
+          const item = document.createElement("div");
+
+          item.className = "list-item";
+
+          item.innerHTML = `
+      <div style="display:flex;gap:10px;align-items:center;flex:1">
+
+        ${cert.imageUrl ? `<img src="${cert.imageUrl}" class="list-item-img">` : ""}
+
+        <div class="list-item-info">
+          <h4>${cert.name}</h4>
+          <p>${cert.issuer || ""} ${cert.date ? "• " + cert.date : ""}</p>
+        </div>
+
+      </div>
+
+      <button class="btn btn-sm btn-danger delete-cert" data-key="${key}">
+      Delete
+      </button>
+      `;
+
+          list.appendChild(item);
+
         });
-        attachDeleteListeners(list, loadCerts);
-      } catch(e) { list.innerHTML = `<div class="empty-state">&gt; Error: ${e.message}</div>`; }
+
+        document.querySelectorAll(".delete-cert").forEach(btn => {
+          btn.onclick = async function () {
+
+            const key = this.dataset.key;
+
+            if (confirm("Delete this certificate?")) {
+
+              await remove(dbRef(db, "certificates/" + key));
+
+              toast("Certificate deleted");
+
+              loadCerts();
+              loadOverview();
+
+            }
+
+          };
+        });
+
+      }
+      catch (e) {
+
+        list.innerHTML = `<div class="empty-state">Error: ${e.message}</div>`;
+
+      }
+
     }
-
-    document.getElementById('add-cert-btn').addEventListener('click', async () => {
-      const name = document.getElementById('cert-name').value.trim();
-      if (!name) { toast('Certificate name required', 'error'); return; }
-      const btn = document.getElementById('add-cert-btn');
-      btn.disabled = true; btn.textContent = '[ UPLOADING... ]';
-      try {
-        let imageUrl = '';
-        const file = document.getElementById('cert-img').files[0];
-        if (file) imageUrl = await uploadFile(file, 'certificates', 'cert-bar', 'cert-progress');
-        const newRef = push(dbRef(db, 'certificates'));
-        await set(newRef, {
-          name,
-          issuer: document.getElementById('cert-issuer').value.trim(),
-          date: document.getElementById('cert-date').value.trim(),
-          link: document.getElementById('cert-link').value.trim(),
-          about: document.getElementById('cert-about').value.trim(),
-          imageUrl,
-          createdAt: Date.now()
-        });
-        ['cert-name','cert-issuer','cert-date','cert-link','cert-about'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('cert-preview').style.display = 'none';
-        document.getElementById('cert-upload-label').textContent = 'Click to upload certificate image';
-        document.getElementById('cert-img').value = '';
-        toast('Certificate added!');
-        await loadCerts(); await loadOverview();
-      } catch(e) { toast('Error: ' + e.message, 'error'); }
-      btn.disabled = false; btn.textContent = '[ ADD CERTIFICATE ]';
-    });
-
     // ─────────── BLOGS ───────────
     async function loadBlogs() {
-      const list = document.getElementById('blogs-list');
-      try {
-        const snap = await get(dbRef(db, 'blogs'));
-        if (!snap.exists()) { list.innerHTML = '<div class="empty-state">&gt; No blog posts yet.</div>'; return; }
-        list.innerHTML = '';
-        const items = [];
-        snap.forEach(child => items.push({ key: child.key, ...child.val() }));
-        items.reverse().forEach(d => {
-          const el = document.createElement('div');
-          el.className = 'list-item';
-          el.innerHTML = `
-            <div style="display:flex;gap:1rem;align-items:center;flex:1">
-              ${d.imageUrl ? `<img src="${d.imageUrl}" class="list-item-img" alt="">` : ''}
-              <div class="list-item-info">
-                <h4>${d.title}</h4>
-                <p>${(d.content||'').substring(0,80)}...</p>
-              </div>
-            </div>
-            <button class="btn btn-sm btn-danger" data-key="${d.key}" data-img="${d.imageUrl||''}" data-col="blogs">Delete</button>`;
-          list.appendChild(el);
-        });
-        attachDeleteListeners(list, loadBlogs);
-      } catch(e) { list.innerHTML = `<div class="empty-state">&gt; Error: ${e.message}</div>`; }
-    }
 
-    document.getElementById('add-blog-btn').addEventListener('click', async () => {
-      const title = document.getElementById('blog-title').value.trim();
-      const content = document.getElementById('blog-content').value.trim();
-      if (!title || !content) { toast('Title and content required', 'error'); return; }
-      const btn = document.getElementById('add-blog-btn');
-      btn.disabled = true; btn.textContent = '[ PUBLISHING... ]';
-      try {
-        let imageUrl = '';
-        const file = document.getElementById('blog-img').files[0];
-        if (file) imageUrl = await uploadFile(file, 'blogs', 'blog-bar', 'blog-progress');
-        const newRef = push(dbRef(db, 'blogs'));
-        await set(newRef, { title, content, imageUrl, createdAt: Date.now() });
-        ['blog-title','blog-content'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('blog-preview').style.display = 'none';
-        document.getElementById('blog-upload-label').textContent = 'Click to upload cover image';
-        document.getElementById('blog-img').value = '';
-        toast('Blog post published!');
-        await loadBlogs(); await loadOverview();
-      } catch(e) { toast('Error: ' + e.message, 'error'); }
-      btn.disabled = false; btn.textContent = '[ PUBLISH POST ]';
-    });
+      const list = document.getElementById("blogs-list")
+
+      const snap = await get(dbRef(db, "blogs"))
+
+      list.innerHTML = ""
+
+      if (!snap.exists()) {
+        list.innerHTML = "> No blogs"
+        return
+      }
+
+      const data = snap.val()
+
+      Object.keys(data).reverse().forEach(key => {
+
+        const b = data[key]
+
+        const el = document.createElement("div")
+
+        el.className = "list-item"
+
+        el.innerHTML = `
+
+<div class="list-item-info">
+
+<h4>${b.title}</h4>
+
+<p>${b.content.substring(0, 60)}...</p>
+
+</div>
+
+<button class="btn btn-sm btn-danger delete-blog" data-key="${key}">
+Delete
+</button>
+
+`
+
+        list.appendChild(el)
+
+      })
+
+      document.querySelectorAll(".delete-blog").forEach(btn => {
+
+        btn.onclick = async function () {
+
+          const key = this.dataset.key
+
+          await remove(dbRef(db, "blogs/" + key))
+
+          toast("Blog deleted")
+
+          loadBlogs()
+          loadOverview()
+
+        }
+
+      })
+
+    }
 
     // ─────────── DELETE ───────────
     function attachDeleteListeners(container, reloadFn) {
@@ -567,10 +965,11 @@
             toast('Deleted successfully.');
             await reloadFn();
             await loadOverview();
-          } catch(e) { toast('Error: ' + e.message, 'error'); }
+          } catch (e) { toast('Error: ' + e.message, 'error'); }
         });
       });
     }
   </script>
 </body>
+
 </html>
