@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Al Amin| Portfolio</title>
+  <title>Al Amin | Portfolio</title>
   <link rel="stylesheet" href="assets/css/style.css" />
   <style>
     #hero {
@@ -13,11 +13,24 @@
       gap: 3rem;
       align-items: center;
       padding: 80px 4rem 2rem;
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
     }
-    .hero-left { display: flex; flex-direction: column; justify-content: center; }
-    .hero-prefix { color: var(--text-muted); font-size: 0.9rem; letter-spacing: 3px; margin-bottom: 1rem; }
+    
+    .hero-left { 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      z-index: 2;
+    }
+    
+    .hero-prefix { 
+      color: var(--text-muted); 
+      font-size: 0.9rem; 
+      letter-spacing: 3px; 
+      margin-bottom: 1rem; 
+    }
+    
     .hero-name {
       font-family: var(--font-head);
       font-size: clamp(2rem, 4.5vw, 4rem);
@@ -26,20 +39,88 @@
       margin-bottom: 1rem;
       text-shadow: 0 0 30px rgba(0,255,65,0.3);
     }
-    .hero-role { font-family: var(--font-head); font-size: clamp(0.9rem, 2vw, 1.3rem); color: var(--cyan); margin-bottom: 1.5rem; min-height: 2rem; }
-    .hero-desc { color: var(--text-muted); line-height: 1.8; font-size: 0.88rem; margin-bottom: 2.5rem; }
-    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .hero-stats { display: flex; gap: 2rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--card-border); flex-wrap: wrap; }
-    .stat-item { text-align: center; }
-    .stat-num { font-family: var(--font-head); font-size: 1.6rem; color: var(--green); }
-    .stat-label { color: var(--text-muted); font-size: 0.72rem; letter-spacing: 1px; }
-    .scroll-hint { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); color: var(--text-muted); font-size: 0.7rem; letter-spacing: 2px; animation: bounce 2s ease-in-out infinite; z-index: 10; }
-    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-8px)} }
-    .terminal-line { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.4rem; }
-    .terminal-line span { color: var(--green); }
+    
+    .hero-role { 
+      font-family: var(--font-head); 
+      font-size: clamp(0.9rem, 2vw, 1.3rem); 
+      color: var(--cyan); 
+      margin-bottom: 1.5rem; 
+      min-height: 2rem; 
+    }
+    
+    .hero-desc { 
+      color: var(--text-muted); 
+      line-height: 1.8; 
+      font-size: 0.88rem; 
+      margin-bottom: 2.5rem; 
+    }
+    
+    .hero-btns { 
+      display: flex; 
+      gap: 1rem; 
+      flex-wrap: wrap; 
+    }
+    
+    .hero-stats { 
+      display: flex; 
+      gap: 2rem; 
+      margin-top: 3rem; 
+      padding-top: 2rem; 
+      border-top: 1px solid var(--card-border); 
+      flex-wrap: wrap; 
+    }
+    
+    .stat-item { 
+      text-align: center; 
+    }
+    
+    .stat-num { 
+      font-family: var(--font-head); 
+      font-size: 1.6rem; 
+      color: var(--green); 
+    }
+    
+    .stat-label { 
+      color: var(--text-muted); 
+      font-size: 0.72rem; 
+      letter-spacing: 1px; 
+    }
+    
+    .scroll-hint { 
+      position: fixed; 
+      bottom: 2rem; 
+      left: 50%; 
+      transform: translateX(-50%); 
+      color: var(--text-muted); 
+      font-size: 0.7rem; 
+      letter-spacing: 2px; 
+      animation: bounce 2s ease-in-out infinite; 
+      z-index: 10; 
+    }
+    
+    @keyframes bounce { 
+      0%,100%{transform:translateX(-50%) translateY(0)} 
+      50%{transform:translateX(-50%) translateY(-8px)} 
+    }
+    
+    .terminal-line { 
+      color: var(--text-muted); 
+      font-size: 0.8rem; 
+      margin-bottom: 0.4rem; 
+    }
+    
+    .terminal-line span { 
+      color: var(--green); 
+    }
 
     /* ── HERO RIGHT — CYBER TERMINAL ── */
-    .hero-right { display: flex; align-items: center; justify-content: center; }
+    .hero-right { 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      z-index: 2;
+    }
+    
     .cyber-terminal {
       width: 100%;
       max-width: 500px;
@@ -49,6 +130,7 @@
       overflow: hidden;
       box-shadow: 0 0 40px rgba(0,255,65,0.08), 0 0 80px rgba(0,255,65,0.04);
     }
+    
     .terminal-titlebar {
       background: rgba(0,255,65,0.07);
       border-bottom: 1px solid rgba(0,255,65,0.15);
@@ -57,27 +139,150 @@
       align-items: center;
       gap: 0.45rem;
     }
-    .t-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .t-dot.red { background: #ff5f57; }
-    .t-dot.amber { background: #febc2e; }
-    .t-dot.green { background: #28c840; }
-    .terminal-title { margin: 0 auto; color: rgba(0,255,65,0.5); font-size: 0.68rem; letter-spacing: 2px; font-family: var(--font-main); }
-    .terminal-body { padding: 1.2rem 1.4rem; font-size: 0.76rem; line-height: 2; min-height: 300px; font-family: var(--font-main); }
-    .t-line { margin-bottom: 0; }
-    .t-prompt { color: var(--green); }
-    .t-cmd { color: var(--cyan); }
-    .t-out { color: rgba(0,255,65,0.6); padding-left: 1rem; display: block; }
-    .t-ok  { color: var(--green); padding-left: 1rem; display: block; }
-    .t-warn { color: var(--amber); padding-left: 1rem; display: block; }
-    .t-err { color: #ff6b6b; padding-left: 1rem; display: block; }
-    .t-gap { display: block; height: 0.4rem; }
-    .t-blink { display: inline-block; width: 7px; height: 13px; background: var(--green); animation: tblink 1s step-end infinite; vertical-align: middle; margin-left: 2px; }
-    @keyframes tblink { 50% { opacity: 0; } }
-    .typed-text { display: inline; }
+    
+    .t-dot { 
+      width: 10px; 
+      height: 10px; 
+      border-radius: 50%; 
+    }
+    
+    .t-dot.red { 
+      background: #ff5f57; 
+    }
+    
+    .t-dot.amber { 
+      background: #febc2e; 
+    }
+    
+    .t-dot.green { 
+      background: #28c840; 
+    }
+    
+    .terminal-title { 
+      margin: 0 auto; 
+      color: rgba(0,255,65,0.5); 
+      font-size: 0.68rem; 
+      letter-spacing: 2px; 
+      font-family: var(--font-main); 
+    }
+    
+    .terminal-body { 
+      padding: 1.2rem 1.4rem; 
+      font-size: 0.76rem; 
+      line-height: 2; 
+      min-height: 300px; 
+      font-family: var(--font-main); 
+      overflow-y: auto;
+    }
+    
+    .t-line { 
+      margin-bottom: 0; 
+    }
+    
+    .t-prompt { 
+      color: var(--green); 
+    }
+    
+    .t-cmd { 
+      color: var(--cyan); 
+    }
+    
+    .t-out { 
+      color: rgba(0,255,65,0.6); 
+      padding-left: 1rem; 
+      display: block; 
+    }
+    
+    .t-ok  { 
+      color: var(--green); 
+      padding-left: 1rem; 
+      display: block; 
+    }
+    
+    .t-warn { 
+      color: var(--amber); 
+      padding-left: 1rem; 
+      display: block; 
+    }
+    
+    .t-err { 
+      color: #ff6b6b; 
+      padding-left: 1rem; 
+      display: block; 
+    }
+    
+    .t-gap { 
+      display: block; 
+      height: 0.4rem; 
+    }
+    
+    .t-blink { 
+      display: inline-block; 
+      width: 7px; 
+      height: 13px; 
+      background: var(--green); 
+      animation: tblink 1s step-end infinite; 
+      vertical-align: middle; 
+      margin-left: 2px; 
+    }
+    
+    @keyframes tblink { 
+      50% { opacity: 0; } 
+    }
+    
+    .typed-text { 
+      display: inline; 
+    }
 
-    @media (max-width: 960px) {
-      #hero { grid-template-columns: 1fr; padding: 80px 2rem 2rem; gap: 0; }
-      .hero-right { display: none; }
+    /* ── DESKTOP MODE FIXES ── */
+    @media (min-width: 961px) {
+      #hero {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+      }
+      .hero-right {
+        display: flex !important;
+      }
+    }
+
+    /* ── TABLET MODE ── */
+    @media (max-width: 1024px) and (min-width: 769px) {
+      #hero {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        padding: 80px 2rem 2rem;
+      }
+      .cyber-terminal {
+        max-width: 400px;
+      }
+      .terminal-body {
+        min-height: 250px;
+        font-size: 0.7rem;
+      }
+    }
+
+    /* ── MOBILE MODE ── */
+    @media (max-width: 768px) {
+      #hero { 
+        grid-template-columns: 1fr; 
+        padding: 80px 1.5rem 2rem; 
+        gap: 2rem;
+        min-height: auto;
+      }
+      .hero-right { 
+        display: none !important; 
+      }
+      .hero-name {
+        font-size: clamp(1.8rem, 5vw, 2.8rem);
+      }
+      .hero-role {
+        font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+      }
+      .hero-desc {
+        font-size: 0.8rem;
+      }
     }
   </style>
 </head>
@@ -171,7 +376,7 @@
 
     startMatrixRain();
 
-    const roles = ['ETHICAL HACKER', 'BUG HUNTER', 'FREELANCEER', 'RED TIMING'];
+    const roles = ['ETHICAL HACKER', 'BUG HUNTER', 'FREELANCER', 'RED TEAMER'];
     let ri = 0;
     function nextRole() {
       typeWriter('typewriter', roles[ri % roles.length], 80, () => {
@@ -187,19 +392,20 @@
     }
 
     async function loadStats() {
-  try {
-    const [p, s, c, b] = await Promise.all([
-      get(ref(db,'projects')), 
-      get(ref(db,'skills')), 
-      get(ref(db,'certificates')), 
-      get(ref(db,'blogs'))
-    ]);
-    animateCount('stat-projects', p.exists() ? Object.keys(p.val()).length : 0);
-    animateCount('stat-skills',   s.exists() ? Object.keys(s.val()).length : 0);
-    animateCount('stat-certs',    c.exists() ? Object.keys(c.val()).length : 0);
-    animateCount('stat-blogs',    b.exists() ? Object.keys(b.val()).length : 0); 
-  } catch(e) { console.warn('Stats:', e.message); }
-}
+      try {
+        const [p, s, c, b] = await Promise.all([
+          get(ref(db,'projects')), 
+          get(ref(db,'skills')), 
+          get(ref(db,'certificates')), 
+          get(ref(db,'blogs'))
+        ]);
+        animateCount('stat-projects', p.exists() ? Object.keys(p.val()).length : 0);
+        animateCount('stat-skills',   s.exists() ? Object.keys(s.val()).length : 0);
+        animateCount('stat-certs',    c.exists() ? Object.keys(c.val()).length : 0);
+        animateCount('stat-blogs',    b.exists() ? Object.keys(b.val()).length : 0); 
+      } catch(e) { console.warn('Stats:', e.message); }
+    }
+    
     loadStats();
 
     const hamburger = document.getElementById('hamburger');
@@ -207,8 +413,8 @@
     hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
     mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
 
-
   </script>
+
   <footer class="site-footer">
     &lt;<span>&copy; 2025-2026 Al Amin. All Rights Reserved</span>&gt;
     <div class="footer-copy">Cybersecurity Enthusiast | Bug Hunter | Future Red Teamer</div>
