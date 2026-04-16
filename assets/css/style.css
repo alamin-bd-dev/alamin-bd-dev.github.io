@@ -44,7 +44,7 @@ body {
 /* ── NAV ── */
 nav {
   position: fixed;
-  top: 0;  right: 0;
+  top: 0; left: 0; right: 0;
   z-index: 100;
   background: rgba(0,0,0,0.85);
   border-bottom: 1px solid var(--card-border);
@@ -99,7 +99,7 @@ nav {
 .mobile-menu {
   display: none;
   position: fixed;
-  top: 60px; right: 0;
+  top: 60px; right: 1rem;
   background: rgba(0,0,0,0.97);
   border-bottom: 1px solid var(--card-border);
   z-index: 99;
@@ -109,7 +109,8 @@ nav {
   opacity: 0;
   transition: transform 0.25s ease, opacity 0.25s ease;
   pointer-events: none;
-  width: 100%;
+  width: 220px;
+  border-radius: 4px;
 }
 .mobile-menu.open {
   display: flex;
