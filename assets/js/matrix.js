@@ -11,20 +11,45 @@ export function startMatrixRain(canvasId = 'matrix-canvas') {
   const fontSize = 14;
   let columns = Math.floor(canvas.width / fontSize);
   let drops = Array(columns).fill(1);
-  function draw() {
-    ctx.fillStyle = 'rgba(0,0,0,0.08)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.font = fontSize + 'px monospace';
-    for (let i = 0; i < drops.length; i++) {
-      const char = chars[Math.floor(Math.random() * chars.length)];
-      const red = Math.random() > 0.05 ? '#ff0000' : '#ff3333';
-      ctx.fillStyle = red;
-      ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-      drops[i]++;
+ function draw() {
+  // Keep old characters visible a little longer
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.035)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.font = `bold ${fontSize}px monospace`;
+
+  for (let i = 0; i < drops.length; i++) {
+
+    const char = chars[Math.floor(Math.random() * chars.length)];
+    const chance = Math.random();
+
+    // Brightness levels
+    if (chance > 0.97) {
+      // Very bright head
+      ctx.fillStyle = '#ff6666';
+    } else if (chance > 0.82) {
+      // Medium bright
+      ctx.fillStyle = '#ff2222';
+    } else {
+      // Dark red, but still visible
+      ctx.fillStyle = '#cc0000';
     }
+
+    ctx.fillText(
+      char,
+      i * fontSize,
+      drops[i] * fontSize
+    );
+
+    if (
+      drops[i] * fontSize > canvas.height &&
+      Math.random() > 0.975
+    ) {
+      drops[i] = 0;
+    }
+
+    drops[i]++;
   }
-  setInterval(draw, 50);
 }
 
 export function typeWriter(elementId, text, speed = 80, callback) {
